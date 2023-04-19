@@ -4,13 +4,12 @@ import dev.flight_app.Dao.UserDao;
 import dev.flight_app.entity.Booking;
 import dev.flight_app.entity.User;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 public class UserService {
     private final UserDao userDao;
+    private final Map<String, User> loggedInUser = new HashMap<>();
+
     public UserService(UserDao userDao) {
         this.userDao = userDao;
     }
@@ -40,9 +39,19 @@ public class UserService {
     public boolean saveData() {
         return userDao.saveToFile();
     }
-    public boolean logIn(String login, String password){
-        return userDao.getById(login)
-                .map(user -> user.getPassword().equals(password))
-                .orElse(false);
+    public Optional<User> logIn(String login, String password){
+        return userDao.getAll()
+                .values()
+                .stream()
+                .filter(user -> user.getLogin().equals(login) && user.getPassword().equals(password))
+                .findFirst()
+                .map(user -> {
+                    loggedInUser.put(login, user);
+                    return user;
+                });
+    }
+    public boolean logout(User user){
+        loggedInUser.remove(user.id());
+        return loggedInUser.isEmpty();
     }
 }

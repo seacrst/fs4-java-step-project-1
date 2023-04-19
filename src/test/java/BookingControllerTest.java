@@ -22,7 +22,7 @@ public class BookingControllerTest {
     private BookingController BC;
     private Flight flight;
     private User user;
-    private Passenger passenger;
+    private List<Passenger> passenger;
 
     @BeforeEach
     void setUp(){
@@ -30,19 +30,22 @@ public class BookingControllerTest {
         BC = new BookingController(BSMock);
         flight = new Flight();
         user = new User(1, "xxx", "qwert1234", "Nina", "Smith");
-        passenger = new Passenger("Nina", "Smith");
+        passenger = new ArrayList<>();
+        passenger.add(new Passenger("Nina", "Smith"));
+
     }
     @Test
     public void testMyFlightsWithPassenger(){
-        Booking b1 =  new Booking(1, flight, passenger, user);
+        Booking b1 = new Booking(1, flight, passenger, user);
+        Booking b2 =  new Booking(2, flight, passenger, user);
         Map<Integer, Booking> m = new HashMap<>();
         m.put(1, b1);
         m.put(2, b1);
         List<Map.Entry<Integer, Booking>> expected = m.entrySet().stream().toList();
 
-        when(BSMock.myFlights(passenger.getFirstName(), passenger.getLastName())).thenReturn(expected);
+        when(BSMock.myFlights("Nina", "Smith")).thenReturn(expected);
 
-        List<Map.Entry<Integer, Booking>> actual = BC.myFlights(passenger.getFirstName(), passenger.getLastName());
+        List<Map.Entry<Integer, Booking>> actual = BC.myFlights("Nina", "Smith");
 
         assertEquals(expected, actual);
     }
@@ -50,15 +53,15 @@ public class BookingControllerTest {
     @Test
     public void testMyFlightsWithUser(){
         Booking b1 =  new Booking(1, flight, passenger, user);
+        Booking b2 =  new Booking(2, flight, passenger, user);
         Map<Integer, Booking> m = new HashMap<>();
         m.put(1, b1);
-        m.put(2, b1);
+        m.put(2, b2);
         List<Map.Entry<Integer, Booking>> expected = m.entrySet().stream().toList();
 
         when(BSMock.myFlights(user)).thenReturn(expected);
 
         List<Map.Entry<Integer, Booking>> actual = BC.myFlights(user);
-
         assertEquals(expected, actual);
     }
 
@@ -66,9 +69,9 @@ public class BookingControllerTest {
     public void testCreateNewBooking(){
         Booking expected = new Booking(1, flight, passenger, user);
 
-        when(BSMock.createNewBooking(flight, passenger.getFirstName(), passenger.getLastName(), user)).thenReturn(expected);
+        when(BSMock.createNewBooking(flight, passenger, user)).thenReturn(expected);
 
-        Booking actual = BC.createNewBooking(flight, passenger.getFirstName(), passenger.getLastName(), user);
+        Booking actual = BC.createNewBooking(flight, passenger, user);
         assertEquals(expected, actual);
 
     }

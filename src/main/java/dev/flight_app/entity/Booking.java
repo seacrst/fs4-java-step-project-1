@@ -3,17 +3,17 @@ package dev.flight_app.entity;
 import dev.flight_app.Dao.Identifiable;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class Booking implements Serializable, Identifiable<Integer> {
-    @Serial
     private static final long serialVersionUID = 1L;
     private final Integer id;
     private final Flight flight;
-    private final Passenger passenger;
+    private final List<Passenger> passenger;
     private final User user;
-    public Booking(Integer id, Flight flight, Passenger passenger, User user) {
+    public Booking(Integer id, Flight flight, List<Passenger> passenger, User user) {
         this.id = id;
         this.flight = flight;
         this.passenger = passenger;
@@ -27,11 +27,11 @@ public class Booking implements Serializable, Identifiable<Integer> {
                 "\n"
                 ;
     }
-//    private String passengerPrettyFormat(){
-//        return passenger.stream()
-//                .map(passenger -> String.format("%d: %s", this.passenger.indexOf(passenger)+1, passenger.toString()))
-//                .toList().toString();
-//    }
+    private String passengerPrettyFormat(){
+        return passenger.stream()
+                .map(passenger -> String.format("%d: %s", this.passenger.indexOf(passenger)+1, passenger.toString()))
+                .toList().toString();
+    }
 
     public Integer getId() {
         return id;
@@ -44,8 +44,11 @@ public class Booking implements Serializable, Identifiable<Integer> {
         return flight;
     }
 
-    public Passenger getPassenger() {
+    public List<Passenger> getPassenger() {
         return passenger;
+    }
+    public void addPassenger(Passenger P){
+        passenger.add(P);
     }
 
     @Override

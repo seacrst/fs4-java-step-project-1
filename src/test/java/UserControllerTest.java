@@ -1,6 +1,4 @@
-import dev.flight_app.Controller.BookingController;
 import dev.flight_app.Controller.UserController;
-import dev.flight_app.Service.BookingService;
 import dev.flight_app.Service.UserService;
 import dev.flight_app.entity.Booking;
 import dev.flight_app.entity.Flight;
@@ -20,11 +18,14 @@ public class UserControllerTest {
     private UserService USMock;
     private UserController UC;
     private User user;
+    private List<Passenger> passenger;
     @BeforeEach
     void setUp(){
         USMock = mock(UserService.class);
         UC = new UserController(USMock);
         user = new User(1, "test", "password", "Nina", "Smith");
+        passenger = new ArrayList<>();
+        passenger.add(new Passenger("Nina", "Smith"));
     }
     @Test
     public void testCreateNewUser(){
@@ -49,8 +50,8 @@ public class UserControllerTest {
     public void testMyBookings(){
         User expected = user;
         Flight flight = new Flight();
-        Booking booking1 = new Booking(1, flight, new Passenger(user.getName(), user.getSurname()), user);
-        Booking booking2 = new Booking(2, flight, new Passenger(user.getName(), user.getSurname()), user);
+        Booking booking1 = new Booking(1, flight, passenger, user);
+        Booking booking2 = new Booking(2, flight, passenger, user);
         List<Booking> bookings = new ArrayList<>();
         bookings.add(booking1);
         bookings.add(booking2);
@@ -90,8 +91,16 @@ public class UserControllerTest {
     }
     @Test
     public void testLogIn(){
-        when(USMock.logIn("test", "password")).thenReturn(true);
-        boolean result = UC.logIn("test", "password");
+        when(USMock.logIn("test", "password")).thenReturn(Optional.of(user));
+        Optional<User> user1 = UC.logIn("test", "password");
+        assertTrue(user1.isPresent());
+    }
+    @Test
+    public void testLogout(){
+        when(USMock.logout(user)).thenReturn(true);
+        boolean result = UC.logout(user);
+
         assertTrue(result);
+        verify(USMock, times(1)).logout(user);
     }
 }

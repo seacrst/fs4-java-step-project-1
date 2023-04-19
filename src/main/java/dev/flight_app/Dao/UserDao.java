@@ -24,8 +24,7 @@ public class UserDao implements DAO<String, User>{
 
     @Override
     public boolean delete(String login) {
-        User deleteUser = users.remove(login);
-        return Optional.ofNullable(users.get(login))
+        return Optional.ofNullable(users.remove(login))
                 .isPresent();
     }
 

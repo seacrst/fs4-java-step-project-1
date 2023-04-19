@@ -32,7 +32,10 @@ public class UserController {
     public boolean saveData() {
         return userService.saveData();
     }
-    public boolean logIn(String login, String password){
+    public Optional<User> logIn(String login, String password){
         return userService.logIn(login, password);
+    }
+    public boolean logout(User user){
+        return userService.logout(user);
     }
 }

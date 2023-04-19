@@ -52,10 +52,20 @@ public class UserServiceTest {
     @Test
     public void testLogIn(){
         User user = US.createNewUser("xxx", "qwert1234", "Nina", "Smith");
+        Optional<User> user1 = US.logIn("xxx", "qwert1234");
+        Optional<User> user3 = US.logIn("xx", "qwert1234");
+        Optional<User> user2 = US.logIn("xxx", "qwert234");
+        assertTrue(user1.isPresent());
+        assertTrue(user3.isEmpty());
+        assertTrue(user2.isEmpty());
 
-        assertTrue(US.logIn("xxx", "qwert1234"));
-        assertFalse(US.logIn("xx", "qwert1234"));
-        assertFalse(US.logIn("xxx", "qwert234"));
+    }
+    @Test
+    public void testLogout(){
+        User user = US.createNewUser("xxx", "qwert1234", "Nina", "Smith");
+        Optional<User> user1 = US.logIn("xxx", "qwert1234");
+
+        assertTrue(US.logout(user));
     }
     @Test
     public void testGetNextId(){

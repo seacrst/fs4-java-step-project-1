@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.Objects;
 
 public class User implements Serializable, Identifiable<String> {
-
+    private static final long serialVersionUID = 1L;
     private final Integer id;
     private final String login;
     private final String password;

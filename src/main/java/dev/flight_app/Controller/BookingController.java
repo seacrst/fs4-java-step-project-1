@@ -3,8 +3,10 @@
     import dev.flight_app.Service.BookingService;
     import dev.flight_app.entity.Booking;
     import dev.flight_app.entity.Flight;
+    import dev.flight_app.entity.Passenger;
     import dev.flight_app.entity.User;
 
+    import java.util.ArrayList;
     import java.util.List;
     import java.util.Map;
 
@@ -17,11 +19,15 @@
         public List<Map.Entry<Integer, Booking>> myFlights(String name, String surname){
             return bookingService.myFlights(name, surname);
     }
+
         public List<Map.Entry<Integer, Booking>> myFlights(User user){
             return bookingService.myFlights(user);
         }
-        public Booking createNewBooking(Flight flight, String name, String surname, User user) {
-            return bookingService.createNewBooking(flight, name, surname, user);
+        public Booking createNewBooking(Flight flight,List<Passenger> passengers, User user) {
+            return bookingService.createNewBooking(flight, passengers,user);
+        }
+        public boolean addPassenger(Booking booking, String name, String surname){
+            return bookingService.addPassenger(booking, name, surname);
         }
         public boolean cancelBooking(int id) {
             return bookingService.cancelBooking(id);

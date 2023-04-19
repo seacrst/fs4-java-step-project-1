@@ -6,6 +6,7 @@ import dev.flight_app.entity.Flight;
 import dev.flight_app.entity.Passenger;
 import dev.flight_app.entity.User;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -22,19 +23,27 @@ public class BookingService {
     public Optional<Booking> getBookingById(Integer id) {
         return bookingDao.getById(id);
     }
-    public Booking createNewBooking(Flight flight, String name, String surname, User user){
-        Passenger newPassenger = new Passenger(name, surname);
-        Booking newBooking = new Booking(bookingDao.generateId(), flight, newPassenger, user);
+    public Booking createNewBooking(Flight flight,List<Passenger> passengers, User user){
+        Booking newBooking = new Booking(bookingDao.generateId(), flight, passengers, user);
         user.addBookings(newBooking);
         bookingDao.save(newBooking);
         return newBooking;
+    }
+    public boolean addPassenger(Booking booking, String name, String surname){
+        Optional<Booking> byId = bookingDao.getById(booking.id());
+        if (byId.isEmpty()) return false;
+        Passenger passenger = new Passenger(name, surname);
+        byId.get().addPassenger(passenger);
+        return true;
     }
     public List<Map.Entry<Integer, Booking>> myFlights(String name, String surname){
         Passenger passenger = new Passenger(name, surname);
         return bookingDao.getAll()
                 .entrySet()
                 .stream()
-                .filter( b -> b.getValue().getPassenger().equals(passenger))
+                .filter( b -> b.getValue().getPassenger().stream()
+                        .anyMatch(e->e.getFirstName().equals(name) &&
+                                e.getLastName().equals(surname)))
                 .collect(Collectors.toList());
     }
     public List<Map.Entry<Integer, Booking>> myFlights(User user){
