@@ -5,6 +5,8 @@ import dev.flight_app.entity.Booking;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
+
 public class BookingDao implements DAO<Integer, Booking>{
     private final Map<Integer, Booking> bookings = new HashMap<>();
     private final BookingDB BDB = BookingDB.getBDB();
@@ -14,14 +16,14 @@ public class BookingDao implements DAO<Integer, Booking>{
     }
 
     @Override
-    public Booking getById(Integer id) {
-        return bookings.get(id);
+    public Optional<Booking> getById(Integer id) {
+        return Optional.ofNullable(bookings.get(id));
     }
 
     @Override
     public boolean delete(Integer id) {
-        Booking deleteBooking = bookings.remove(id);
-        return deleteBooking != null;
+
+        return Optional.ofNullable(bookings.remove(id)).isPresent();
     }
     @Override
     public void save(Booking booking) {
@@ -36,5 +38,12 @@ public class BookingDao implements DAO<Integer, Booking>{
     @Override
     public boolean saveToFile() {
         return BDB.write(bookings);
+    }
+
+    public Integer generateId(){
+        return bookings
+                .keySet()
+                .stream()
+                .max(Integer::compare).orElse(0)+1;
     }
 }
