@@ -11,35 +11,41 @@ public class Booking implements Serializable, Identifiable<Integer> {
     private static final long serialVersionUID = 1L;
     private final Integer id;
     private final Flight flight;
-    private final List<Passenger> passengers;
-    public Booking(Integer id, Flight flight, List<Passenger> passenger) {
+    private final Passenger passenger;
+    private final User user;
+    public Booking(Integer id, Flight flight, Passenger passenger, User user) {
         this.id = id;
         this.flight = flight;
-        this.passengers = passenger;}
+        this.passenger = passenger;
+        this.user = user;
+    }
     @Override
     public String toString() {
         return "Booking ID: " + id +
                 "\nFlight: " + flight.toString() +
-                "\nPassengers:" + passengerPrettyFormat()+
+                "\nPassengers:" + passenger.toString()+
                 "\n"
                 ;
     }
-    private String passengerPrettyFormat(){
-        return passengers.stream()
-                .map(passenger -> String.format("%d: %s", passengers.indexOf(passenger)+1, passenger.toString()))
-                .toList().toString();
-    }
+//    private String passengerPrettyFormat(){
+//        return passenger.stream()
+//                .map(passenger -> String.format("%d: %s", this.passenger.indexOf(passenger)+1, passenger.toString()))
+//                .toList().toString();
+//    }
 
     public Integer getId() {
         return id;
+    }
+    public User getUser(){
+        return user;
     }
 
     public Flight getFlight() {
         return flight;
     }
 
-    public List<Passenger> getPassengers() {
-        return passengers;
+    public Passenger getPassenger() {
+        return passenger;
     }
 
     @Override
@@ -52,11 +58,11 @@ public class Booking implements Serializable, Identifiable<Integer> {
         if (this == that) return true;
         if (that == null || !(that instanceof Booking)) return false;
         Booking booking = (Booking) that;
-        return id == booking.id && Objects.equals(flight, booking.flight) && Objects.equals(passengers, booking.passengers);
+        return id == booking.id && Objects.equals(flight, booking.flight) && Objects.equals(passenger, booking.passenger);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, flight, passengers);
+        return Objects.hash(id, flight, passenger);
     }
 }
