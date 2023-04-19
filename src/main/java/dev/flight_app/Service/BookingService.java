@@ -24,7 +24,7 @@ public class BookingService {
     }
     public Booking createNewBooking(Flight flight, String name, String surname, User user){
         Passenger newPassenger = new Passenger(name, surname);
-        Booking newBooking = new Booking(getNextId(), flight, newPassenger, user);
+        Booking newBooking = new Booking(bookingDao.generateId(), flight, newPassenger, user);
         user.addBookings(newBooking);
         bookingDao.save(newBooking);
         return newBooking;
@@ -46,12 +46,6 @@ public class BookingService {
     }
     public boolean cancelBooking(Integer id){
         return bookingDao.delete(id);
-    }
-    private Integer getNextId(){
-        return getAllBookings()
-                .keySet()
-                .stream()
-                .max(Integer::compare).orElse(0)+1;
     }
     public void loadData(){
         bookingDao.load();

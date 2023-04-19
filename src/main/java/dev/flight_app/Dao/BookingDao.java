@@ -39,4 +39,11 @@ public class BookingDao implements DAO<Integer, Booking>{
     public boolean saveToFile() {
         return BDB.write(bookings);
     }
+
+    public Integer generateId(){
+        return bookings
+                .keySet()
+                .stream()
+                .max(Integer::compare).orElse(0)+1;
+    }
 }

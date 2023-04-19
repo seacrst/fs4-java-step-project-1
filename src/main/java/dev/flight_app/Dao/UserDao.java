@@ -25,7 +25,8 @@ public class UserDao implements DAO<String, User>{
     @Override
     public boolean delete(String login) {
         User deleteUser = users.remove(login);
-        return deleteUser != null;
+        return Optional.ofNullable(users.get(login))
+                .isPresent();
     }
 
     @Override
@@ -41,6 +42,14 @@ public class UserDao implements DAO<String, User>{
     @Override
     public boolean saveToFile() {
         return UDB.write(users);
+    }
+    public Integer generateId(){
+        return users
+                .values()
+                .stream()
+                .mapToInt(User::getId)
+                .boxed()
+                .max(Integer::compare).orElse(0)+1;
     }
 
 }

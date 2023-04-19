@@ -10,12 +10,12 @@ import java.util.Objects;
 
 public class User implements Serializable, Identifiable<String> {
 
-    private Integer id;
-    private String login;
-    private String password;
-    private String name;
-    private String surname;
-    private List<Booking> userBookings;
+    private final Integer id;
+    private final String login;
+    private final String password;
+    private final String name;
+    private final String surname;
+    private final List<Booking> userBookings;
 
 
     public User(Integer id, String login, String password, String name, String surname) {
@@ -26,15 +26,6 @@ public class User implements Serializable, Identifiable<String> {
         this.surname = surname;
         this.userBookings = new ArrayList<>();
     }
-
-//    public User(String login, String password, String name, String surname) {
-//        this.login = login;
-//        this.password = password;
-//        this.name = name;
-//        this.surname = surname;
-//        this.userBookings = new ArrayList<>();
-//    }
-
     public Integer getId() {
         return id;
     }
@@ -61,7 +52,7 @@ public class User implements Serializable, Identifiable<String> {
     }
     @Override
     public String toString() {
-        return String.format("%s %s (%s)\n Bookings: %s", name, surname, login, userBookings);
+        return String.format("%s %s (%s)\nBookings: %s", name, surname, login, userBookings);
     }
 
     @Override
