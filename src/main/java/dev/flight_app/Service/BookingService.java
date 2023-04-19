@@ -8,6 +8,7 @@ import dev.flight_app.entity.User;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class BookingService {
@@ -15,22 +16,12 @@ public class BookingService {
     public BookingService(BookingDao bookingDao) {
         this.bookingDao = bookingDao;
     }
-    public List<Map.Entry<Integer, Booking>> myFlights(String name, String surname, User user){
-        Passenger passenger = new Passenger(name, surname);
-        return bookingDao.getAll()
-                .entrySet()
-                .stream()
-                .filter( b -> b.getValue().getPassenger().equals(passenger) || b.getValue().getUser().equals(user))
-                .collect(Collectors.toList());
+    public Map<Integer, Booking> getAllBookings() {
+        return bookingDao.getAll();
     }
-    public List<Map.Entry<Integer, Booking>> myBookings(User user){
-        return bookingDao.getAll()
-                .entrySet()
-                .stream()
-                .filter( b -> b.getValue().getUser().equals(user))
-                .collect(Collectors.toList());
+    public Optional<Booking> getBookingById(Integer id) {
+        return bookingDao.getById(id);
     }
-
     public Booking createNewBooking(Flight flight, String name, String surname, User user){
         Passenger newPassenger = new Passenger(name, surname);
         Booking newBooking = new Booking(getNextId(), flight, newPassenger, user);
@@ -38,12 +29,26 @@ public class BookingService {
         bookingDao.save(newBooking);
         return newBooking;
     }
-
+    public List<Map.Entry<Integer, Booking>> myFlights(String name, String surname){
+        Passenger passenger = new Passenger(name, surname);
+        return bookingDao.getAll()
+                .entrySet()
+                .stream()
+                .filter( b -> b.getValue().getPassenger().equals(passenger))
+                .collect(Collectors.toList());
+    }
+    public List<Map.Entry<Integer, Booking>> myFlights(User user){
+        return bookingDao.getAll()
+                .entrySet()
+                .stream()
+                .filter( b -> b.getValue().getUser().equals(user))
+                .collect(Collectors.toList());
+    }
     public boolean cancelBooking(Integer id){
         return bookingDao.delete(id);
     }
     private Integer getNextId(){
-        return bookingDao.getAll()
+        return getAllBookings()
                 .keySet()
                 .stream()
                 .max(Integer::compare).orElse(0)+1;

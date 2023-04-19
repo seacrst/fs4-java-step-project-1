@@ -22,6 +22,7 @@ public class BookingDao implements DAO<Integer, Booking>{
 
     @Override
     public boolean delete(Integer id) {
+
         return Optional.ofNullable(bookings.remove(id)).isPresent();
     }
     @Override

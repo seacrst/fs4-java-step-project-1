@@ -44,6 +44,15 @@ public class User implements Serializable, Identifiable<String> {
     public String getPassword() {
         return password;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
     public List<Booking> getUserBookings() {
         return userBookings;
     }

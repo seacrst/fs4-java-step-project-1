@@ -4,9 +4,7 @@ import dev.flight_app.Service.UserService;
 import dev.flight_app.entity.Booking;
 import dev.flight_app.entity.User;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 public class UserController {
@@ -25,12 +23,8 @@ public class UserController {
     public Optional<User> getUser(String login){
         return userService.getUser(login);
     }
-    public List<Booking> getBookings(String login){
-        return userService.getBookings(login);
-    }
-
-    public boolean deleteUser(String login){
-        return userService.deleteUser(login);
+    public List<Booking> myBookings(String login){
+        return userService.myBookings(login);
     }
     public void loadData(){
         userService.loadData();
@@ -38,7 +32,7 @@ public class UserController {
     public boolean saveData() {
         return userService.saveData();
     }
-    public boolean isLogIn(String login, String password){
-        return userService.islogIn(login, password);
+    public boolean logIn(String login, String password){
+        return userService.logIn(login, password);
     }
 }
