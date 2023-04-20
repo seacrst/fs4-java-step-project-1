@@ -29,7 +29,7 @@ public class Validation {
 
     public boolean isValidAirline(String s){
         for(Airline airline: Airline.values()){
-            if(airline.equals(s.toUpperCase())) return true;
+            if(airline.toString().equals(s.toUpperCase())) return true;
         }
         return false;
     }
