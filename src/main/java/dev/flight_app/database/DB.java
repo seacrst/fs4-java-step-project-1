@@ -1,4 +1,4 @@
-package dev.flight_app.Database;
+package dev.flight_app.database;
 
 import java.io.*;
 import java.util.HashMap;

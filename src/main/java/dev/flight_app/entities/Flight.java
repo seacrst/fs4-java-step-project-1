@@ -1,4 +1,4 @@
-package dev.flight_app.entity;
+package dev.flight_app.entities;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;

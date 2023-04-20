@@ -1,6 +1,6 @@
 package dev.flight_app;
 
-import dev.flight_app.entity.Airline;
+import dev.flight_app.entities.Airline;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

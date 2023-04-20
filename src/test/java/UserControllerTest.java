@@ -1,9 +1,9 @@
-import dev.flight_app.Controller.UserController;
-import dev.flight_app.Service.UserService;
-import dev.flight_app.entity.Booking;
-import dev.flight_app.entity.Flight;
-import dev.flight_app.entity.Passenger;
-import dev.flight_app.entity.User;
+import dev.flight_app.controllers.UserController;
+import dev.flight_app.services.UserService;
+import dev.flight_app.entities.Booking;
+import dev.flight_app.entities.Flight;
+import dev.flight_app.entities.Passenger;
+import dev.flight_app.entities.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

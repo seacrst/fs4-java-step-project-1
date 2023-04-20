@@ -1,6 +1,6 @@
-package dev.flight_app.Database;
+package dev.flight_app.database;
 
-import dev.flight_app.entity.Booking;
+import dev.flight_app.entities.Booking;
 
 import java.io.File;
 import java.util.Map;

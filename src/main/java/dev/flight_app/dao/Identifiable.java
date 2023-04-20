@@ -1,4 +1,4 @@
-package dev.flight_app.Dao;
+package dev.flight_app.dao;
 
 public interface Identifiable<ID> {
     ID id();

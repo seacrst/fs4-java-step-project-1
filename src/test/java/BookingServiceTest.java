@@ -1,10 +1,10 @@
-import dev.flight_app.Service.BookingService;
-import dev.flight_app.entity.Booking;
-import dev.flight_app.entity.Flight;
-import dev.flight_app.entity.Passenger;
-import dev.flight_app.entity.User;
+import dev.flight_app.services.BookingService;
+import dev.flight_app.entities.Booking;
+import dev.flight_app.entities.Flight;
+import dev.flight_app.entities.Passenger;
+import dev.flight_app.entities.User;
 import org.junit.jupiter.api.BeforeEach;
-import dev.flight_app.Dao.BookingDao;
+import dev.flight_app.dao.BookingDao;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

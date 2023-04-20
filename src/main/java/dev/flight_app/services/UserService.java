@@ -1,8 +1,8 @@
-package dev.flight_app.Service;
+package dev.flight_app.services;
 
-import dev.flight_app.Dao.UserDao;
-import dev.flight_app.entity.Booking;
-import dev.flight_app.entity.User;
+import dev.flight_app.dao.UserDao;
+import dev.flight_app.entities.Booking;
+import dev.flight_app.entities.User;
 
 import java.util.*;
 

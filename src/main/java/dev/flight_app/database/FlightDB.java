@@ -1,7 +1,7 @@
-package dev.flight_app.Database;
+package dev.flight_app.database;
 
 import dev.flight_app.FlightGenerator;
-import dev.flight_app.entity.Flight;
+import dev.flight_app.entities.Flight;
 
 import java.io.File;
 import java.util.Map;

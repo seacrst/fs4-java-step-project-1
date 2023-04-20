@@ -1,4 +1,4 @@
-package dev.flight_app.entity;
+package dev.flight_app.entities;
 
 public enum City {
     AMSTERDAM("AMS"),

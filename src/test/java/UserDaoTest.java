@@ -1,5 +1,5 @@
-import dev.flight_app.Dao.UserDao;
-import dev.flight_app.entity.User;
+import dev.flight_app.dao.UserDao;
+import dev.flight_app.entities.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

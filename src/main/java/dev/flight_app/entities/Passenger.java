@@ -1,4 +1,4 @@
-package dev.flight_app.entity;
+package dev.flight_app.entities;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -45,9 +45,7 @@ public class Passenger implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Passenger)) return false;
-
         Passenger passenger = (Passenger) o;
-
         if (!firstName.equals(passenger.firstName)) return false;
         return lastName.equals(passenger.lastName);
     }

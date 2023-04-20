@@ -1,9 +1,9 @@
-package dev.flight_app.Controller;
+package dev.flight_app.controllers;
 
 import dev.flight_app.AuthenticationException;
-import dev.flight_app.Service.UserService;
-import dev.flight_app.entity.Booking;
-import dev.flight_app.entity.User;
+import dev.flight_app.services.UserService;
+import dev.flight_app.entities.Booking;
+import dev.flight_app.entities.User;
 
 import java.util.List;
 import java.util.Optional;

@@ -1,6 +1,6 @@
-package dev.flight_app.Database;
+package dev.flight_app.database;
 
-import dev.flight_app.entity.User;
+import dev.flight_app.entities.User;
 
 import java.io.File;
 import java.util.Map;

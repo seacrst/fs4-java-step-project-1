@@ -1,9 +1,8 @@
-package dev.flight_app.entity;
+package dev.flight_app.entities;
 
-import dev.flight_app.Dao.Identifiable;
+import dev.flight_app.dao.Identifiable;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 

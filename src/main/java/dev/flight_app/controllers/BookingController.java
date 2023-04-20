@@ -1,12 +1,11 @@
-    package dev.flight_app.Controller;
+    package dev.flight_app.controllers;
 
-    import dev.flight_app.Service.BookingService;
-    import dev.flight_app.entity.Booking;
-    import dev.flight_app.entity.Flight;
-    import dev.flight_app.entity.Passenger;
-    import dev.flight_app.entity.User;
+    import dev.flight_app.services.BookingService;
+    import dev.flight_app.entities.Booking;
+    import dev.flight_app.entities.Flight;
+    import dev.flight_app.entities.Passenger;
+    import dev.flight_app.entities.User;
 
-    import java.util.ArrayList;
     import java.util.List;
     import java.util.Map;
 

@@ -1,4 +1,4 @@
-package dev.flight_app.Dao;
+package dev.flight_app.dao;
 
 import java.util.Map;
 import java.util.Optional;
