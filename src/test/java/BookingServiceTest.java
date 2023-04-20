@@ -18,12 +18,14 @@ public class BookingServiceTest {
     private BookingDao BD;
     private BookingService BS;
     private List<Passenger> passengers;
+    Flight flight;
     @BeforeEach
     void setUp(){
         BD = new BookingDao();
         BS = new BookingService(BD);
         passengers = new ArrayList<>();
         passengers.add(new Passenger("Nina", "Smith"));
+        flight = new Flight();
     }
 
     @Test
@@ -35,27 +37,14 @@ public class BookingServiceTest {
 
     @Test
     public void testCreateNewBooking(){
-        Flight flight = new Flight();
         User user = new User(1, "xxx", "qwert1234", "Nina", "Smith");
         Booking newBooking =  BS.createNewBooking(flight, passengers, user);
         Booking newBooking2 =  BS.createNewBooking(flight, passengers, user);
         assertEquals(newBooking, BS.getBookingById(1).orElse(null));
         assertEquals(newBooking2, BS.getBookingById(newBooking2.id()).orElse(null));
     }
-//    @Test
-//    public void testAddPassenger(){
-//        Flight flight = new Flight();
-//        User user = new User(1, "xxx", "qwert1234", "Nina", "Smith");
-//        Booking newBooking =  BS.createNewBooking(flight, user);
-//
-//        BS.addPassenger(newBooking, "Nina", "Smith");
-//        BS.addPassenger(newBooking, "Peter", "Smith");
-//
-//        assertEquals(2, newBooking.getPassenger().size());
-//    }
     @Test
     public void testGetBookingById(){
-        Flight flight = new Flight();
         User user = new User(1, "xxx", "qwert1234", "Nina", "Smith");
         Booking newBooking =  BS.createNewBooking(flight, passengers, user);
         Optional<Booking> res = BS.getBookingById(newBooking.id());
@@ -64,7 +53,6 @@ public class BookingServiceTest {
     }
     @Test
     public void testMyFlights(){
-        Flight flight = new Flight();
         Flight flight1 = new Flight();
         User user = new User(1, "xxx", "qwert1234", "Nina", "Smith");
         User user1 = new User(2, "xxxq", "qwert1234", "Jane", "Smith");
@@ -79,7 +67,6 @@ public class BookingServiceTest {
     }
     @Test
     public void testCancelBooking(){
-        Flight flight = new Flight();
         User user = new User(1, "xxx", "qwert1234", "Nina", "Smith");
         User user1 = new User(2, "xxxq", "qwert1234", "Jane", "Smith");
         passengers.add(new Passenger("Peter", "Smith"));
@@ -92,7 +79,6 @@ public class BookingServiceTest {
     }
     @Test
     public void testGetNextId(){
-        Flight flight = new Flight();
         User user = new User(1, "xxx", "qwert1234", "Nina", "Smith");
         User user1 = new User(2, "xxxq", "qwert1234", "Jane", "Smith");
         Booking newBooking =  BS.createNewBooking(flight, passengers, user);
@@ -104,7 +90,6 @@ public class BookingServiceTest {
 
     @Test
     public void testSaveData(){
-        Flight flight = new Flight();
         User user = new User(1, "xxx", "qwert1234", "Nina", "Smith");
         Booking newBooking =  BS.createNewBooking(flight, passengers, user);
         boolean result = BS.saveData();
@@ -112,7 +97,6 @@ public class BookingServiceTest {
     }
     @Test
     public void testLoadData(){
-        Flight flight = new Flight();
         User user = new User(1, "xxx", "qwert1234", "Nina", "Smith");
         Booking newBooking =  BS.createNewBooking(flight, passengers, user);
         Integer id = newBooking.id();

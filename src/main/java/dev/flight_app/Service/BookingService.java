@@ -29,32 +29,29 @@ public class BookingService {
         bookingDao.save(newBooking);
         return newBooking;
     }
-    public boolean addPassenger(Booking booking, String name, String surname){
-        Optional<Booking> byId = bookingDao.getById(booking.id());
-        if (byId.isEmpty()) return false;
-        Passenger passenger = new Passenger(name, surname);
-        byId.get().addPassenger(passenger);
-        return true;
-    }
     public List<Map.Entry<Integer, Booking>> myFlights(String name, String surname){
-        Passenger passenger = new Passenger(name, surname);
-        return bookingDao.getAll()
+        List<Map.Entry<Integer, Booking>> result = bookingDao.getAll()
                 .entrySet()
                 .stream()
-                .filter( b -> b.getValue().getPassenger().stream()
-                        .anyMatch(e->e.getFirstName().equals(name) &&
+                .filter(b -> b.getValue().getPassenger().stream()
+                        .anyMatch(e -> e.getFirstName().equals(name) &&
                                 e.getLastName().equals(surname)))
                 .collect(Collectors.toList());
+        result.stream().forEach(x -> System.out.println((result.indexOf(x)+1) + ": "+ x.toString()));
+        return result;
     }
     public List<Map.Entry<Integer, Booking>> myFlights(User user){
-        return bookingDao.getAll()
+        List<Map.Entry<Integer, Booking>> result = bookingDao.getAll()
                 .entrySet()
                 .stream()
                 .filter( b -> b.getValue().getUser().equals(user))
                 .collect(Collectors.toList());
+        result.stream().forEach(x -> System.out.println((result.indexOf(x)+1) + ": "+ x.toString()));
+        return result;
     }
     public boolean cancelBooking(Integer id){
         return bookingDao.delete(id);
+
     }
     public void loadData(){
         bookingDao.load();
