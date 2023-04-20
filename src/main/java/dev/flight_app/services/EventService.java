@@ -2,6 +2,7 @@ package dev.flight_app.services;
 
 public class EventService implements EventInteract {
 
+    private String value = "";
     private static EventService instance = null;
     private EventService() {
     }
@@ -12,6 +13,10 @@ public class EventService implements EventInteract {
         }
 
         return new EventService();
+    }
+
+    public void handle(String val) {
+        value = val;
     }
 
     @Override
