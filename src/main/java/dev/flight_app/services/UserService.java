@@ -1,5 +1,6 @@
 package dev.flight_app.services;
 
+import dev.flight_app.DuplicateLoginException;
 import dev.flight_app.dao.UserDao;
 import dev.flight_app.entities.Booking;
 import dev.flight_app.entities.User;
@@ -18,6 +19,9 @@ public class UserService {
     }
     public User createNewUser(String login, String password, String name, String surname){
         User newUser = new User(userDao.generateId(), login, password, name, surname);
+        if (checkLogin(login)){
+            throw new DuplicateLoginException("Such user is exists.");
+        }
         userDao.save(newUser);
         return newUser;
     }

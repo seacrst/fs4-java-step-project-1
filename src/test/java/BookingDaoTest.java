@@ -5,11 +5,14 @@ import dev.flight_app.entities.Passenger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import static dev.flight_app.entities.Airline.*;
+import static dev.flight_app.entities.City.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class BookingDaoTest {
@@ -22,8 +25,7 @@ public class BookingDaoTest {
         dao = new BookingDao();
         passenger = new ArrayList<>();
         passenger.add(new Passenger("Nina", "Smith"));
-//        flight = new Flight("code", RYANAIR, "100", BERN, BRATISLAVA, LocalDateTime.now(), LocalDateTime.now());
-        flight = new Flight();
+        flight = new Flight("code", RYANAIR, 100, BERN, BRATISLAVA, LocalDateTime.now(), LocalDateTime.now());
     }
     @Test
     public void testGetAll(){

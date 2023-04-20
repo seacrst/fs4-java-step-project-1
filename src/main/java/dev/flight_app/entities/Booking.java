@@ -5,6 +5,8 @@ import dev.flight_app.dao.Identifiable;
 import java.io.*;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class Booking implements Serializable, Identifiable<Integer> {
     private static final long serialVersionUID = 1L;
@@ -18,18 +20,21 @@ public class Booking implements Serializable, Identifiable<Integer> {
         this.passenger = passenger;
         this.user = user;
     }
+    public Booking(Integer id, Flight flight, List<Passenger> passenger) {
+        this.id = id;
+        this.flight = flight;
+        this.passenger = passenger;
+        this.user = null;
+    }
     @Override
     public String toString() {
         return "Booking ID: " + id +
-                "\nFlight: " + flight.toString() +
-                "\nPassengers:" + passenger.toString()+
-                "\n"
-                ;
+                "\nFlight: " + flight.toString() + passengerPrettyFormat();
     }
     private String passengerPrettyFormat(){
-        return passenger.stream()
-                .map(passenger -> String.format("%d: %s", this.passenger.indexOf(passenger)+1, passenger.toString()))
-                .toList().toString();
+        return IntStream.range(0, passenger.size())
+                .mapToObj(i -> String.format("%12d. %s", i + 1, passenger.get(i).toString()))
+                .collect(Collectors.joining(System.lineSeparator(), "Passengers:" + System.lineSeparator(), ""));
     }
 
     public Integer getId() {
@@ -60,11 +65,14 @@ public class Booking implements Serializable, Identifiable<Integer> {
         if (this == that) return true;
         if (that == null || !(that instanceof Booking)) return false;
         Booking booking = (Booking) that;
-        return id == booking.id && Objects.equals(flight, booking.flight) && Objects.equals(passenger, booking.passenger);
+        return Objects.equals(flight, booking.flight) && Objects.equals(passenger, booking.passenger);
     }
-
+    public boolean similarPassengerOnFlight(Object that) {
+        Booking booking = (Booking) that;
+        return Objects.equals(flight, booking.flight) && booking.getPassenger().stream().anyMatch(passenger -> getPassenger().stream().anyMatch(p-> p.equals(passenger)));
+    }
     @Override
     public int hashCode() {
-        return Objects.hash(id, flight, passenger);
+        return Objects.hash(flight, passenger);
     }
 }

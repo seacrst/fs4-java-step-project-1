@@ -7,11 +7,15 @@ import dev.flight_app.entities.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static dev.flight_app.entities.Airline.RYANAIR;
+import static dev.flight_app.entities.City.BERN;
+import static dev.flight_app.entities.City.BRATISLAVA;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
@@ -28,7 +32,7 @@ public class BookingControllerTest {
     void setUp(){
         BSMock = mock(BookingService.class);
         BC = new BookingController(BSMock);
-        flight = new Flight();
+        flight = new Flight("code", RYANAIR, 100, BERN, BRATISLAVA, LocalDateTime.now(), LocalDateTime.now());
         user = new User(1, "xxx", "qwert1234", "Nina", "Smith");
         passenger = new ArrayList<>();
         passenger.add(new Passenger("Nina", "Smith"));

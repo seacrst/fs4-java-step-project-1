@@ -1,6 +1,7 @@
 package dev.flight_app.controllers;
 
 import dev.flight_app.AuthenticationException;
+import dev.flight_app.DuplicateLoginException;
 import dev.flight_app.services.UserService;
 import dev.flight_app.entities.Booking;
 import dev.flight_app.entities.User;
@@ -16,6 +17,7 @@ public class UserController {
     }
 
     public User createNewUser(String login, String password, String name, String surname){
+
         return userService.createNewUser(login, password, name, surname);
     }
     public boolean checkLogin(String login){
@@ -37,11 +39,11 @@ public class UserController {
     public boolean saveData() {
         return userService.saveData();
     }
-    public Optional<User> logIn(String login, String password){
-        if (userService.logIn(login, password).isEmpty()){
-            throw new AuthenticationException("Your login or password is incorrect.");
-        }
-        return userService.logIn(login, password);
+    public User logIn(String login, String password){
+//        if (userService.logIn(login, password).isEmpty()){
+////            throw new AuthenticationException("Your login or password is incorrect.");
+//        }
+        return userService.logIn(login, password).orElseThrow(()-> new AuthenticationException("Your login or password is incorrect."));
     }
     public boolean logout(User user){
         return userService.logout(user);

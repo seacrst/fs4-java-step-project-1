@@ -6,6 +6,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class User implements Serializable, Identifiable<String> {
     private static final long serialVersionUID = 1L;
@@ -51,9 +53,14 @@ public class User implements Serializable, Identifiable<String> {
     }
     @Override
     public String toString() {
-        return String.format("%s %s (%s)\nBookings: %s", name, surname, login, userBookings);
+        return String.format("%s %s (%s)\nBookings:\n%s", name, surname, login, userBookingsInPrettyFormat());
     }
+    public String userBookingsInPrettyFormat(){
+        return IntStream.range(0, userBookings.size())
+                .mapToObj(i -> String.format("%s", userBookings.get(i).toString()))
+                .collect(Collectors.joining(System.lineSeparator()));
 
+    }
     @Override
     public boolean equals(Object that) {
         if (this == that) return true;

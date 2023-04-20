@@ -7,11 +7,15 @@ import org.junit.jupiter.api.BeforeEach;
 import dev.flight_app.dao.BookingDao;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import static dev.flight_app.entities.Airline.RYANAIR;
+import static dev.flight_app.entities.City.BERN;
+import static dev.flight_app.entities.City.BRATISLAVA;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class BookingServiceTest {
@@ -25,7 +29,8 @@ public class BookingServiceTest {
         BS = new BookingService(BD);
         passengers = new ArrayList<>();
         passengers.add(new Passenger("Nina", "Smith"));
-        flight = new Flight();
+        flight = new Flight("code", RYANAIR, 100, BERN, BRATISLAVA, LocalDateTime.now(), LocalDateTime.now());
+
     }
 
     @Test
@@ -53,7 +58,7 @@ public class BookingServiceTest {
     }
     @Test
     public void testMyFlights(){
-        Flight flight1 = new Flight();
+        Flight flight1 = new Flight("code3", RYANAIR, 100, BERN, BRATISLAVA, LocalDateTime.now(), LocalDateTime.now());
         User user = new User(1, "xxx", "qwert1234", "Nina", "Smith");
         User user1 = new User(2, "xxxq", "qwert1234", "Jane", "Smith");
 
