@@ -10,12 +10,12 @@ public enum Actions {
     Cancel(new Selector("6. Відмінити", 6)),
     Exit(new Selector("0. Вихід", 0));
 
-    private final Selector Selector;
+    private final Selector sel;
     Actions(Selector sel) {
-        Selector = sel;
+        this.sel = sel;
     }
 
     public String get() {
-        return Selector.prompt();
+        return sel.prompt();
     }
 }

@@ -4,25 +4,27 @@ import dev.flight_app.events.Actions;
 import dev.flight_app.events.Event;
 import dev.flight_app.events.Selector;
 import dev.flight_app.services.EventService;
+import dev.flight_app.services.MenuService;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class Menu extends Console {
 
-    LinkedList<Menu> menus = new LinkedList<>();
-    private final EventService event = EventService.use();
+    private final MenuService menus = new MenuService();
 
-    private final LinkedList<Event> eventList = new LinkedList<>();
-
-    public Menu(ArrayList<Event> events) {
+    public Menu() {
         super();
-
-        eventList.addAll(events);
     }
 
     public static void createSelector(Selector sel) {
 
+    }
+
+    public void select(Selector sel, Menu menu) {
+        if (menus.getCurrent().equals(sel.triggerValue())) {
+            menu.open();
+        }
     }
 
     private boolean closed = false;
