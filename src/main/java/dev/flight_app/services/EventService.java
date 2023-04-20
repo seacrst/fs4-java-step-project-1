@@ -1,8 +1,6 @@
 package dev.flight_app.services;
 
-import java.util.HashMap;
-import java.util.Map;
-public class EventService implements Event {
+public class EventService implements EventInteract {
 
     private static EventService instance = null;
     private EventService() {

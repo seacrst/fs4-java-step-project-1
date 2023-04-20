@@ -5,8 +5,8 @@ import java.util.function.Function;
 
 public class Event<T> {
 
-    boolean message = false;
-    Actions action;
+    private boolean message = false;
+    public final Actions action;
 
     public Event(Actions action) {
         this.action = action;
@@ -20,4 +20,5 @@ public class Event<T> {
         if (message) Console.output(action.name());
         return listener.apply(Console.input());
     }
+
 }
