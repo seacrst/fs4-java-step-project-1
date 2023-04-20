@@ -1,5 +1,7 @@
 package dev.flight_app;
 
+import dev.flight_app.entity.Airline;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -24,13 +26,13 @@ public class Validation {
     public boolean isValidId(String id){
         return id.chars().allMatch(Character::isDigit) && id.equals("0");
     }
-    // don't have Airline enum
-//    public boolean isValidAirline(String s){
-//        for(Airline airline: Airline.values()){
-//            if(airline.equals(s.toUpperCase())) return true;
-//        }
-//        return false;
-//    }
+
+    public boolean isValidAirline(String s){
+        for(Airline airline: Airline.values()){
+            if(airline.equals(s.toUpperCase())) return true;
+        }
+        return false;
+    }
     public boolean validateDate(String s){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         try {
