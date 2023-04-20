@@ -25,7 +25,9 @@
         public Booking createNewBooking(Flight flight,List<Passenger> passengers, User user) {
             return bookingService.createNewBooking(flight, passengers,user);
         }
-
+        public Booking createNewBooking(Flight flight,List<Passenger> passengers) {
+            return bookingService.createNewBooking(flight, passengers);
+        }
         public boolean cancelBooking(int id) {
             return bookingService.cancelBooking(id);
         }

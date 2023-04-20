@@ -55,6 +55,6 @@ public class Passenger implements Serializable {
         int result = id;
         result = 31 * result + firstName.hashCode();
         result = 31 * result + lastName.hashCode();
-        return result;
+        return firstName.hashCode()+ lastName.hashCode();
     }
 }

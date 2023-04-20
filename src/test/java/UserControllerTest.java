@@ -7,10 +7,14 @@ import dev.flight_app.entities.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static dev.flight_app.entities.Airline.RYANAIR;
+import static dev.flight_app.entities.City.BERN;
+import static dev.flight_app.entities.City.BRATISLAVA;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -49,7 +53,7 @@ public class UserControllerTest {
     @Test
     public void testMyBookings(){
         User expected = user;
-        Flight flight = new Flight();
+        Flight flight = new Flight("code", RYANAIR, 100, BERN, BRATISLAVA, LocalDateTime.now(), LocalDateTime.now());
         Booking booking1 = new Booking(1, flight, passenger, user);
         Booking booking2 = new Booking(2, flight, passenger, user);
         List<Booking> bookings = new ArrayList<>();

@@ -11,17 +11,32 @@ public class Validation {
         if (s.length() < 2) return false;
         return s.chars().allMatch(Character::isLetter);
     }
-    public boolean isValidPassword(String s){
+    public static boolean isValidPassword(String s){
         if (s.length() < 6) return false;
         return s.chars().anyMatch(Character::isDigit) && s.chars().anyMatch(Character::isLowerCase)
                 && s.chars().anyMatch(Character::isUpperCase) ;
     }
-    public boolean isValidLogin(String s){
+    public static boolean isValidLogin(String s){
         if (s.length() > 2 && s.length() < 20) return false;
         return s.chars().anyMatch(Character::isLetter) && s.chars().anyMatch(Character::isLetterOrDigit);
     }
+    public static String Login(String s){
+        while(!isValidLogin(s)){
+            Console.println("Try again");
+            s = ScannerConstrained.nextLine();
+        }
+        return s;
+    }
+
     public boolean isValidPassengerQt(String s){
         return s.chars().allMatch(c -> Character.isDigit(c) && c != '0');
+    }
+    public static String Pass(String s){
+        while(!isValidPassword(s)){
+            Console.println("Try again");
+            s = ScannerConstrained.nextLine();
+        }
+        return s;
     }
     public boolean isValidId(String id){
         return id.chars().allMatch(Character::isDigit) && id.equals("0");
