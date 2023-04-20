@@ -5,4 +5,8 @@ public class MenuService {
     public void build(String prompt) {
 
     }
+
+    public String getCurrent() {
+        return "";
+    }
 }

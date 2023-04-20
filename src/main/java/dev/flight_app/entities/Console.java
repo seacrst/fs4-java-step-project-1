@@ -1,5 +1,6 @@
 package dev.flight_app.entities;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.stream.Collectors;
@@ -21,6 +22,12 @@ public class Console {
 
     public static String formatRows(Actions... actions) {
         return Arrays.stream(actions)
+                .map(a -> "\n" + a.get() + "\n")
+                .collect(Collectors.joining());
+    }
+
+    public static String formatRows(ArrayList<Actions> actions) {
+        return actions.stream()
                 .map(a -> "\n" + a.get() + "\n")
                 .collect(Collectors.joining());
     }
