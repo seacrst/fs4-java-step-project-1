@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class Console {
     private static final PrintStream out = System.out;
-    public void println(String line) {
+    public static void println(String line) {
         out.println(line);
     }
     public static void print(String line) {

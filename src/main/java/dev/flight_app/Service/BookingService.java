@@ -1,5 +1,6 @@
 package dev.flight_app.Service;
 
+import dev.flight_app.Console;
 import dev.flight_app.Dao.BookingDao;
 import dev.flight_app.entity.Booking;
 import dev.flight_app.entity.Flight;
@@ -23,7 +24,7 @@ public class BookingService {
     public Optional<Booking> getBookingById(Integer id) {
         return bookingDao.getById(id);
     }
-    public Booking createNewBooking(Flight flight,List<Passenger> passengers, User user){
+    public Booking createNewBooking(Flight flight, List<Passenger> passengers, User user){
         Booking newBooking = new Booking(bookingDao.generateId(), flight, passengers, user);
         user.addBookings(newBooking);
         bookingDao.save(newBooking);
@@ -50,8 +51,11 @@ public class BookingService {
         return result;
     }
     public boolean cancelBooking(Integer id){
-        return bookingDao.delete(id);
-
+        if (!bookingDao.delete(id)){
+            Console.println("Such booking don't exist.");
+            return false;
+        }
+        return true;
     }
     public void loadData(){
         bookingDao.load();
