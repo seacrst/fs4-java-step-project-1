@@ -15,11 +15,11 @@
         public BookingController(BookingService bookingService) {
             this.bookingService = bookingService;
         }
-        public List<Map.Entry<Integer, Booking>> myFlights(String name, String surname){
+        public List<Booking> myFlights(String name, String surname){
             return bookingService.myFlights(name, surname);
     }
 
-        public List<Map.Entry<Integer, Booking>> myFlights(User user){
+        public List<Booking> myFlights(User user){
             return bookingService.myFlights(user);
         }
         public Booking createNewBooking(Flight flight,List<Passenger> passengers, User user) {

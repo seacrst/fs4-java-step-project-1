@@ -45,22 +45,22 @@ public class BookingService {
             throw new DuplicateBookingException("Booking is already exists for one of the passenger. Please choose a different date/time or cancel the existing booking before making a new one.");
         };
     }
-    public List<Map.Entry<Integer, Booking>> myFlights(String name, String surname){
-        List<Map.Entry<Integer, Booking>> result = bookingDao.getAll()
-                .entrySet()
+    public List<Booking> myFlights(String name, String surname){
+        List<Booking> result = bookingDao.getAll()
+                .values()
                 .stream()
-                .filter(b -> b.getValue().getPassenger().stream()
+                .filter(b -> b.getPassenger().stream()
                         .anyMatch(e -> e.getFirstName().equals(name) &&
                                 e.getLastName().equals(surname)))
                 .collect(Collectors.toList());
         result.stream().forEach(x -> System.out.println(x.toString()));
         return result;
     }
-    public List<Map.Entry<Integer, Booking>> myFlights(User user){
-        List<Map.Entry<Integer, Booking>> result = bookingDao.getAll()
-                .entrySet()
+    public List<Booking> myFlights(User user){
+        List<Booking> result = bookingDao.getAll()
+                .values()
                 .stream()
-                .filter( b -> b.getValue().getUser().equals(user))
+                .filter( b -> b.getUser().equals(user))
                 .collect(Collectors.toList());
         result.stream().forEach(x -> System.out.println((result.indexOf(x)+1) + ": "+ x.toString()));
         return result;
