@@ -15,7 +15,7 @@ public class Flight implements Serializable, Identifiable<Integer> {
     private final int flightID;
     private final String flightCode;
     private final Airline airline;
-    private final int seatsQuantity;
+    private int seatsQuantity;
     private final City departureCity;
     private final City arrivalCity;
     private final LocalDateTime departureDateTime;
@@ -90,6 +90,18 @@ public class Flight implements Serializable, Identifiable<Integer> {
 
     public List<Passenger> getPassengers() {
         return passengers;
+    }
+
+    public boolean addPassengerOnBoard(Passenger passenger){
+        passengers.add(passenger);
+        seatsQuantityDecrement();
+        return getPassengers().get(passengers.size()-1).equals(passenger);
+    }
+
+    public boolean seatsQuantityDecrement(){
+        int oldSeatsQuantity = getSeatsQuantity();
+        seatsQuantity--;
+        return getSeatsQuantity() - oldSeatsQuantity == 1;
     }
 
     @Override
