@@ -32,11 +32,11 @@ public class FlightDao implements DAO<Integer, Flight> {
 
     @Override
     public void load() {
-
+        flights.putAll(FDB.read());
     }
 
     @Override
     public boolean save() {
-        return false;
+        return FDB.write(flights);
     }
 }

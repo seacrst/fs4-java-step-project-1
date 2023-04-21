@@ -97,10 +97,10 @@ public class Flight implements Serializable, Identifiable<Integer> {
         return String.format("| %-3d | %s | %s |\u001B[34m %-11s \u001B[0m---\u001B[33m %11s \u001B[0m| %s | %3d | %-16s",
                 flightID,
                 flightCode,
-                departureDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")),
+                departureDateTime.format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")),
                 departureCity.toString().replace("_"," "),
                 arrivalCity.toString().replace("_"," "),
-                arrivalDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")),
+                arrivalDateTime.format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")),
                 seatsQuantity,
                 airline.toString().replace("_"," "));
     }
