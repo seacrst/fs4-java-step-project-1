@@ -1,12 +1,25 @@
 package dev.flight_app.services;
 
+import dev.flight_app.entities.Console;
+import dev.flight_app.events.Event;
+
 public class MenuService {
 
-    public void build(String prompt) {
+    public void switchTo(String s) {
+        if (s.equals("0")) {
 
+        }
     }
 
-    public String getCurrent() {
-        return "";
+    public void displayMessage(String msg) {
+        Console.output(msg);
+    }
+
+    public static enum Selectors {
+        Home,
+        Flights,
+        BookingCreate,
+        BookingSearch,
+        BookingCancel,
     }
 }
