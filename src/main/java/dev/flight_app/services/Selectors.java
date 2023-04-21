@@ -3,26 +3,23 @@ package dev.flight_app.services;
 import dev.flight_app.controllers.MenuController;
 
 public enum Selectors {
-    Home(),
-    Flights(),
-    BookingCreate(),
-    BookingSearch(),
-    BookingCancel();
+    Register("/register", "1"),
+    Home("/index", "2"),
+    AllFlights("/all-flights", "3"),
+    MyFlights("/my-flights", "4"),
+    BookingCreate("/new-booking", "5"),
+    BookingSearch("/find-booking", "6"),
+    GetBooking("/get-flight", "7"),
+    BookingCancel("/cancel-flight", "8");
 
-    Selectors() {
-        MenuController menu = MenuController.get();
+    private String sel;
+    private String id;
 
-        switch (this) {
-            case Home: menu.toHomeMenu();
-            break;
-            case Flights: menu.toMyFlightsMenu();
-            case BookingCreate: menu.toBookingMenu();
-            break;
-            case BookingSearch: menu.toBookingSearchMenu();
-            break;
-            case BookingCancel: menu.toCancelBookingMenu();
-            break;
-            default: break;
-        }
+    Selectors(String s, String id) {
+        sel = s;
+        this.id = id;
     }
+
+    public String getState() {return sel;}
+    public String getId() {return id;}
 }

@@ -29,12 +29,12 @@ public class EventService {
 
     }
 
-    public void findBookingByPassengerData(ArrayList<String> passengerData) {
-
+    public String findBookingByPassengerData(ArrayList<String> passengerData) {
+        return "";
     }
 
-    public void findBookingById(String id) {
-
+    public String findBookingById(String id) {
+        return "";
     }
 
     public void cancelBooking(String id) {

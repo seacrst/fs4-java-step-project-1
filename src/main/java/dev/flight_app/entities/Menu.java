@@ -9,44 +9,15 @@ import dev.flight_app.services.Selectors;
 
 import java.util.function.Function;
 
-public class Menu<T> {
+public class Menu {
     private final MenuController menus = new MenuController();
-    private final EventService events = EventService.use();
-    private Selectors selector;
-
-
-    public Menu(Selectors sel) {
-        selector = sel;
-    }
     public Menu(String msg) {
-        Event.print(msg);
+        Console.output(msg);
     }
 
-    public static void select() {
-
-    }
-
-    public void addSelector(String sel, Event<?> event) {
-        if (events.read().equals(sel)) {
-            event.handle();
+    public void open(Selectors sel) {
+        while (!menus.isClosed()) {
+           menus.switchTo(sel.getState());
         }
-    }
-
-    public void display(Selectors selector) {
-        new Event<T>(selector)
-    }
-
-    private boolean closed = false;
-
-    public void open(Menu menu) {
-        menus.index(selector);
-
-        while (!menu.closed) {
-           menu.display(selector);
-        }
-    }
-
-    public void close() {
-        closed = true;
     }
 }
