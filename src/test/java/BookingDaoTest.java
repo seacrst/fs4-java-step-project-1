@@ -38,14 +38,14 @@ public class BookingDaoTest {
     public void testSave(){
         assertEquals(0, dao.getAll().size());
         Booking booking = new Booking(1, flight, passenger, null);
-        dao.save(booking);
+        dao.add(booking);
         assertEquals(1, dao.getAll().size());
     }
 
     @Test
     public void testGetById(){
         Booking booking = new Booking(1, flight, passenger, null);
-        dao.save(booking);
+        dao.add(booking);
         Optional<Booking> res = dao.getById(1);
         assertTrue(res.isPresent());
         assertEquals(booking, res.get());
@@ -53,7 +53,7 @@ public class BookingDaoTest {
     @Test
     public void testDelete(){
         Booking booking = new Booking(1, flight, passenger, null);
-        dao.save(booking);
+        dao.add(booking);
         assertEquals(1, dao.getAll().size());
         boolean res = dao.delete(1);
         assertTrue(res);
@@ -65,16 +65,16 @@ public class BookingDaoTest {
     @Test
     public void testSaveToFile(){
         Booking booking = new Booking(1, flight, passenger, null);
-        dao.save(booking);
-        boolean result = dao.saveToFile();
+        dao.add(booking);
+        boolean result = dao.save();
         assertTrue(result);
     }
 
     @Test
     public void testLoad(){
         Booking booking = new Booking(2, flight, passenger, null);
-        dao.save(booking);
-        boolean saveRes = dao.saveToFile();
+        dao.add(booking);
+        boolean saveRes = dao.save();
         assertTrue(saveRes);
 
         BookingDao dao2 = new BookingDao();

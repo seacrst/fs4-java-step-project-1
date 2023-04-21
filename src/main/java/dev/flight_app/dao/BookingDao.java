@@ -24,8 +24,8 @@ public class BookingDao implements DAO<Integer, Booking>{
     public boolean delete(Integer id) {
         return Optional.ofNullable(bookings.remove(id)).isPresent();
     }
-    @Override
-    public void save(Booking booking) {
+
+    public void add(Booking booking) {
         bookings.put(booking.id(), booking);
     }
 
@@ -35,7 +35,7 @@ public class BookingDao implements DAO<Integer, Booking>{
     }
 
     @Override
-    public boolean saveToFile() {
+    public boolean save() {
         return BDB.write(bookings);
     }
 

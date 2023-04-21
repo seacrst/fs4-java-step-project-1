@@ -26,7 +26,7 @@ public class UserDao implements DAO<String, User>{
                 .isPresent();
     }
 
-    @Override
+
     public void save(User user) {
         users.put(user.getLogin(), user);
     }
@@ -37,7 +37,7 @@ public class UserDao implements DAO<String, User>{
     }
 
     @Override
-    public boolean saveToFile() {
+    public boolean save() {
         return UDB.write(users);
     }
     public Integer generateId(){

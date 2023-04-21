@@ -1,12 +1,14 @@
 package dev.flight_app.entities;
 
+import dev.flight_app.dao.Identifiable;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Flight implements Serializable {
+public class Flight implements Serializable, Identifiable<Integer> {
     private static final long flightUID = 1_0L;
     private static int flightCounter = 1;
 
@@ -56,10 +58,6 @@ public class Flight implements Serializable {
         this.departureDateTime = departureDateTime;
         this.arrivalDateTime = arrivalDateTime;
         this.passengers = passengers;
-    }
-
-    public int getFlightID() {
-        return flightID;
     }
 
     public String getFlightCode() {
@@ -121,5 +119,11 @@ public class Flight implements Serializable {
     public int hashCode() {
         return flightCode.hashCode();
     }
+
+    @Override
+    public Integer id() {
+        return flightID;
+    }
+
 }
 

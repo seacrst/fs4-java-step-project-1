@@ -28,22 +28,22 @@ public class BookingService {
         Booking newBooking = new Booking(bookingDao.generateId(), flight, passengers, user);
         checkForDuplicateBooking(newBooking);
         user.addBookings(newBooking);
-        bookingDao.save(newBooking);
+        bookingDao.add(newBooking);
         return newBooking;
     }
     public Booking createNewBooking(Flight flight, List<Passenger> passengers){
         Booking newBooking = new Booking(bookingDao.generateId(), flight, passengers);
         checkForDuplicateBooking(newBooking);
-        bookingDao.save(newBooking);
+        bookingDao.add(newBooking);
         return newBooking;
     }
     private void checkForDuplicateBooking(Booking newBooking) {
         if(getAllBookings().values().stream().anyMatch(b -> b.equals(newBooking))){
             throw new DuplicateBookingException("The booking you are trying to make already exists. Please choose a different date/time or cancel the existing booking before making a new one.");
-        };
+        }
         if(getAllBookings().values().stream().anyMatch(b -> b.similarPassengerOnFlight(newBooking))){
             throw new DuplicateBookingException("Booking is already exists for one of the passenger. Please choose a different date/time or cancel the existing booking before making a new one.");
-        };
+        }
     }
     public List<Map.Entry<Integer, Booking>> myFlights(String name, String surname){
         List<Map.Entry<Integer, Booking>> result = bookingDao.getAll()
@@ -76,6 +76,6 @@ public class BookingService {
         bookingDao.load();
     }
     public boolean saveData() {
-        return bookingDao.saveToFile();
+        return bookingDao.save();
     }
 }

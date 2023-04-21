@@ -54,7 +54,7 @@ public class UserDaoTest {
     public void testSaveToFile(){
         User user = new User(1, "xxx", "qwert1234", "Nina", "Smith");
         dao.save(user);
-        boolean result = dao.saveToFile();
+        boolean result = dao.save();
         assertTrue(result);
     }
 
@@ -62,7 +62,7 @@ public class UserDaoTest {
     public void testLoad(){
         User user = new User(33, "xxx", "qwert1234", "Nina", "Smith");
         dao.save(user);
-        boolean saveRes = dao.saveToFile();
+        boolean saveRes = dao.save();
         assertTrue(saveRes);
 
         UserDao dao2 = new UserDao();

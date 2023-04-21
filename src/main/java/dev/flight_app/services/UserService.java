@@ -41,7 +41,7 @@ public class UserService {
        userDao.load();
     }
     public boolean saveData() {
-        return userDao.saveToFile();
+        return userDao.save();
     }
     public Optional<User> logIn(String login, String password){
         return userDao.getAll()
