@@ -10,14 +10,12 @@ import dev.flight_app.services.Selectors;
 import java.util.function.Function;
 
 public class Menu {
-    private final MenuController menus = new MenuController();
+    private final MenuController menu = new MenuController();
     public Menu(String msg) {
         Console.output(msg);
     }
 
     public void open(Selectors sel) {
-        while (!menus.isClosed()) {
-           menus.switchTo(sel.getState());
-        }
+        menu.switchTo(sel.getState());
     }
 }

@@ -1,19 +1,18 @@
 package dev.flight_app.services;
 
-import dev.flight_app.controllers.MenuController;
-
 public enum Selectors {
+    Home("/index", "0"),
     Register("/register", "1"),
-    Home("/index", "2"),
-    AllFlights("/all-flights", "3"),
-    MyFlights("/my-flights", "4"),
-    BookingCreate("/new-booking", "5"),
-    BookingSearch("/find-booking", "6"),
-    GetBooking("/get-flight", "7"),
-    BookingCancel("/cancel-flight", "8");
+    AllFlights("/all-flights", "2"),
+    MyFlights("/my-flights", "3"),
+    CreateBooking("/new-booking", "4"),
+    SearchBooking("/find-booking", "5"),
+    GetFlight("/flight", "6"),
+    CancelBooking("/cancel-flight", "7"),
+    Exit("/exit", "!0");
 
-    private String sel;
-    private String id;
+    private final String sel;
+    private final String id;
 
     Selectors(String s, String id) {
         sel = s;
