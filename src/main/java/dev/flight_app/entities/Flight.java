@@ -2,6 +2,7 @@ package dev.flight_app.entities;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -95,15 +96,15 @@ public class Flight implements Serializable {
 
     @Override
     public String toString() {
-        return String.format("| %-3d | %s | %s |  %s --- %s | %s | %-3d | %s |\n",
+        return String.format("| %-3d | %s | %s |\u001B[34m %-11s \u001B[0m---\u001B[33m %11s \u001B[0m| %s | %3d | %-16s",
                 flightID,
                 flightCode,
-                departureDateTime,
-                departureCity,
-                arrivalCity,
-                arrivalDateTime,
+                departureDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")),
+                departureCity.toString().replace("_"," "),
+                arrivalCity.toString().replace("_"," "),
+                arrivalDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")),
                 seatsQuantity,
-                airline);
+                airline.toString().replace("_"," "));
     }
 
     @Override

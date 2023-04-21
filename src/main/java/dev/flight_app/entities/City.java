@@ -2,7 +2,6 @@ package dev.flight_app.entities;
 
 public enum City {
     AMSTERDAM("AMS"),
-    ANDORRA_LA_VELLA("ALV"),
     ATHENS("ATH"),
     BELGRADE("BEL"),
     BERLIN("BER"),
