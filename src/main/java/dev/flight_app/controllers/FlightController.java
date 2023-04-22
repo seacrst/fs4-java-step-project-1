@@ -12,7 +12,7 @@ public class FlightController {
     private static FlightController fc = null;
     private final FlightService flightService = new FlightService();
 
-//    private final FlightService flightService;
+    //    private final FlightService flightService;
     private FlightDao flightDao;
 
 //    public FlightController() {
@@ -46,13 +46,14 @@ public class FlightController {
     }
 
 
-
     public List<Flight> allFlights() {
         return flightService.getAll();
     }
 
     public void displayAllFlights() {
-        System.out.println(allFlights());
+        List<Flight> temp = allFlights();
+        for (Flight flight : temp)
+            System.out.println(flight);
     }
 
     public void loadData() {
