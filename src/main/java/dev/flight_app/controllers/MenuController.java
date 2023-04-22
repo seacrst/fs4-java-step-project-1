@@ -1,22 +1,20 @@
 package dev.flight_app.controllers;
 
 import dev.flight_app.entities.Console;
+import dev.flight_app.entities.Flight;
 import dev.flight_app.entities.Menu;
 import dev.flight_app.events.Event;
 import dev.flight_app.services.EventService;
 import dev.flight_app.services.MenuService;
 import dev.flight_app.services.Selectors;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.function.Function;
 
 public class MenuController {
-    private static MenuController sharedController = null;
+    private String terminatingMsg = "";
     private final MenuService menus = new MenuService();
-    private final EventService events = EventService.use();
+    private final EventService events;
     private static final Map<String, String> actions = new HashMap<>();
 
     static {
@@ -32,8 +30,8 @@ public class MenuController {
 
     private boolean closed = false;
 
-    public MenuController() {
-
+    public MenuController(EventController eventController) {
+        events = eventController.events();
     }
 
     private static final String homePrompt = """
@@ -73,29 +71,23 @@ public class MenuController {
     private static final String cancelBookingByIdEng = "Enter booking ID: ";
     private static final String getBackPrompt = "0. Назад: ";
     private static final String getBackPromptEng = "0. Back: ";
+    private static final String getFlightFailureEng = "Not found flight";
 
 
     public void toHomeMenu() {
-        clear();
-        menus.displayMessage(MenuController.homePromptEng);
-        String s = Event.readLine();
-
+        String s = Event.readLine(homePromptEng);
         switchTo(actions.get(s.equals("0") ? String.format("!%s", s) : s));
     }
 
-    public void toRegisterMenu() {
-
-    }
+    public void toRegisterMenu() {}
 
     public void toAllFlightsMenu() {
-        clear();
         events.displayAllFlights();
         Event.print(getBackPromptEng);
         switchTo(actions.get(Event.readLine()));
     }
 
     public void toMyFlightsMenu() {
-        clear();
         ArrayList<String> passengerData = Event.collectData(Event::print, readPassengerNamePromptEng, readPassengerSurnamePromptEng);
         events.findBookingByPassengerData(passengerData).forEach(Console::output);
         Event.print(getBackPromptEng);
@@ -103,27 +95,31 @@ public class MenuController {
     }
 
     public void toFlightSearchMenu() {
-        clear();
         menus.displayMessage(searchFlightByIdPromptEng);
-        String response = events.findFlightById(Event.readLine());
-        menus.displayMessage(response);
+        Optional<Flight> response = events.findFlightById(Event.readLine());
+        if (response.isPresent()) {
+            menus.displayMessage(response.get().toString());
+            menus.displayMessage(searchFlightByIdPromptEng);
+            String s = Event.readLine();
+            switchTo(actions.get(s));
+        } else {
+            toWarningMenu(getFlightFailureEng);
+        }
         Event.print(getBackPromptEng);
-        switchTo(actions.get(Event.readLine()));
     }
 
     public void toBookingMenu() {
-        clear();
         ArrayList<String> bookingData = Event.collectData(Event::print, createBookingArrivalPromptEng, createBookingDatePromptEng, createBookingPassengersPromptEng);
         events.createBooking(bookingData);
         switchTo("/index");
     }
 
     public void toFlight() {
-
+        menus.displayMessage(searchFlightByIdPromptEng);
+//        events.createBooking();
     }
 
     public void toCancelBookingMenu() {
-        clear();
         menus.displayMessage(cancelBookingByIdEng);
         events.cancelBooking(actions.get(Event.readLine()));
     }
@@ -132,8 +128,8 @@ public class MenuController {
         toHomeMenu();
     }
 
-    public void toWarningMenu() {
-
+    public void toWarningMenu(String msg) {
+//        Event.readLine();
     }
 
     public void switchTo(String state) {
@@ -148,30 +144,19 @@ public class MenuController {
                 case "/get-flight" -> toFlight();
                 case "/cancel-flight" -> toCancelBookingMenu();
                 case "/exit" -> terminate();
-                default -> toWarningMenu();
+                default -> toWarningMenu("Please choose correct command");
             }
         }
     }
 
     private void terminate() {
-        clear();
-        Console.output("Good bye");
+        Console.output(terminatingMsg);
         closed = true;
+        events.saveData();
     }
-
-    public void clear() {
-     Console.output("\033[H\033[2J");
-     System.out.flush();
+    public void setFinalMsg(String msg) {
+        terminatingMsg = msg;
     }
 
     public boolean isClosed() {return closed;}
-    public static MenuController get() {
-        if (!Objects.isNull(sharedController)) {
-            return sharedController;
-        }
-
-        sharedController = new MenuController();
-
-        return sharedController;
-    }
 }

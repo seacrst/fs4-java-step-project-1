@@ -28,7 +28,7 @@ public class FlightController {
 //        this.flightService = flightService;
 //    }
 
-    private FlightController() {
+    public FlightController() {
     }
 
     public static FlightController create() {

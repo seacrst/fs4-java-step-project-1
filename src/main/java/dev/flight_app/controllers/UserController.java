@@ -14,7 +14,7 @@ import java.util.Optional;
 public class UserController {
     private static UserController uc = null;
     private final UserService userService = new UserService();
-    private UserController() {
+    public UserController() {
     }
     public static UserController create() {
         if (!Objects.isNull(uc)) {

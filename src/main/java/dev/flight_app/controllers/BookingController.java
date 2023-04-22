@@ -13,7 +13,7 @@
     public class BookingController {
         private static BookingController bc = null;
         private final BookingService bookingService = new BookingService();
-        private BookingController() {
+        public BookingController() {
         }
         public static BookingController create() {
             if (!Objects.isNull(bc)) {
