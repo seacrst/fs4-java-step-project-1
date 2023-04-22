@@ -1,8 +1,10 @@
 package dev.flight_app.database;
 
+import dev.flight_app.FlightGenerator;
 import dev.flight_app.entities.Booking;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.Map;
 
 public class BookingDB implements DB<Integer,Booking> {
@@ -20,6 +22,7 @@ public class BookingDB implements DB<Integer,Booking> {
 
     @Override
     public Map<Integer,Booking> read() {
+        if(!file.exists()) write(new HashMap<>(), file);
         return read(file);
     }
 }

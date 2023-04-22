@@ -1,18 +1,11 @@
 package dev.flight_app.services;
 
-import dev.flight_app.Validation;
 import dev.flight_app.dao.FlightDao;
 import dev.flight_app.entities.City;
 import dev.flight_app.entities.Flight;
-import dev.flight_app.entities.Passenger;
-import dev.flight_app.entities.User;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -100,28 +93,12 @@ public class FlightService {
                 .collect(Collectors.toList());
     }
 
-    public List<Flight> selectByUser(User user) {
-        return selectByPassenger(new Passenger(user.getName(), user.getSurname()));
+    public void addPassenger(Flight flight, int bookingSeats) {
+        flightDao.getById(flight.id()).ifPresent(value -> value.addPassenger(bookingSeats));
     }
 
-    public List<Flight> selectByUser(List<Flight> flights, User user) {
-        return selectByPassenger(flights, new Passenger(user.getName(), user.getSurname()));
-    }
-
-    public List<Flight> selectByPassenger(Passenger passenger) {
-        return getAll().stream()
-                .filter(x -> x.getPassengers().contains(passenger))
-                .collect(Collectors.toList());
-    }
-
-    public List<Flight> selectByPassenger(List<Flight> flights, Passenger passenger) {
-        return flights.stream()
-                .filter(x -> x.getPassengers().contains(passenger))
-                .collect(Collectors.toList());
-    }
-
-    public void addPassengerOnboard(Flight flight, Passenger passenger) {
-        flightDao.getById(flight.id()).ifPresent(value -> value.addPassengerOnBoard(passenger));
+    public void removePassenger(Flight flight, int bookingSeats) {
+        flightDao.getById(flight.id()).ifPresent(value -> value.removePassenger(bookingSeats));
     }
 
     public void loadData() {

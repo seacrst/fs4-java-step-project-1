@@ -11,7 +11,7 @@
     import java.util.Objects;
 
     public class BookingController {
-        private static BookingController bc = null;
+        private static BookingController bc;
         private final BookingService bookingService = new BookingService();
         public BookingController() {
         }

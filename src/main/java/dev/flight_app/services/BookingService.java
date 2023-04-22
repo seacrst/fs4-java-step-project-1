@@ -27,7 +27,6 @@ public class BookingService {
     public Booking createNewBooking(Flight flight, List<Passenger> passengers, User user){
         Booking newBooking = new Booking(bookingDao.generateId(), flight, passengers, user);
         checkForDuplicateBooking(newBooking);
-        user.addBookings(newBooking);
         bookingDao.add(newBooking);
         return newBooking;
     }
@@ -66,11 +65,15 @@ public class BookingService {
         return result;
     }
     public boolean cancelBooking(Integer id){
-        if (!bookingDao.delete(id)){
+        Optional<Booking> booking = bookingDao.getById(id);
+        if (booking.isEmpty()){
             Console.println("Such booking don't exist.");
             return false;
+        } else{
+         booking.get().cancelBooking();
+         bookingDao.delete(id);
+         return true;
         }
-        return true;
     }
     public void loadData(){
         bookingDao.load();
