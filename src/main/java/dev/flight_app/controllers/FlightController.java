@@ -51,9 +51,16 @@ public class FlightController {
         return flightService.getAll();
     }
 
-    public void displayAllFlights() {
-        allFlights().forEach(Console::output);
-    }
+//    public void displayAllFlights() {
+//        allFlights().forEach(Console::output);
+//    }
+//
+//    public void displayFlights(List<Flight> flights) {
+//        flights.forEach(Console::output);
+//    }
+
+
+
 
     public void loadData() {
         flightService.loadData();
