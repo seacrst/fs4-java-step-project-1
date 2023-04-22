@@ -7,6 +7,7 @@ import dev.flight_app.entities.Flight;
 import dev.flight_app.entities.Passenger;
 import dev.flight_app.entities.User;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -41,7 +42,6 @@ public class FlightService {
                 .collect(Collectors.toList());
     }
 
-
     public List<Flight> selectByDepartureCity(City departureCity) {
         return getAll().stream()
                 .filter(x -> x.getDepartureCity().equals(departureCity))
@@ -66,16 +66,27 @@ public class FlightService {
                 .collect(Collectors.toList());
     }
 
-
-    public List<Flight> selectByDepartureDate(String departureDate) {
+    public List<Flight> selectByDepartureDate(LocalDate departureDate) {
         return getAll().stream()
-                .filter(x -> x.getDepartureDateTime().toLocalDate().equals(Validation.stringToDate(departureDate)))
+                .filter(x -> x.getDepartureDateTime().toLocalDate().equals(departureDate))
                 .collect(Collectors.toList());
     }
 
-    public List<Flight> selectByDepartureDate(List<Flight> flights, String departureDate) {
+    public List<Flight> selectByDepartureDate(List<Flight> flights, LocalDate departureDate) {
         return flights.stream()
-                .filter(x -> x.getDepartureDateTime().toLocalDate().equals(Validation.stringToDate(departureDate)))
+                .filter(x -> x.getDepartureDateTime().toLocalDate().equals(departureDate))
+                .collect(Collectors.toList());
+    }
+
+    public List<Flight> selectByArrivalDate(LocalDate arrivalDate) {
+        return getAll().stream()
+                .filter(x -> x.getArrivalDateTime().toLocalDate().equals(arrivalDate))
+                .collect(Collectors.toList());
+    }
+
+    public List<Flight> selectByArrivalDate(List<Flight> flights, LocalDate arrivalDate) {
+        return flights.stream()
+                .filter(x -> x.getArrivalDateTime().toLocalDate().equals(arrivalDate))
                 .collect(Collectors.toList());
     }
 
