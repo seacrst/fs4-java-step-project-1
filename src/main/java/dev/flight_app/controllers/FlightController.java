@@ -12,7 +12,17 @@ public class FlightController {
         this.flightService = flightService;
     }
 
-    public List<Flight> allFlights(){
+    public List<Flight> selectById(int id) {
+        return flightService.selectById(id);
+    }
+
+    public List<Flight> selectByFlightCode(String flightCode) {
+        return flightService.selectByFlightCode(flightCode);
+    }
+
+
+
+    public List<Flight> allFlights() {
         return flightService.getAll();
     }
 
@@ -20,15 +30,15 @@ public class FlightController {
         System.out.println(allFlights());
     }
 
-    public void loadData(){
+    public void loadData() {
         flightService.loadData();
     }
+
     public boolean saveData() {
         return flightService.saveData();
     }
 
     // метод принимает место отправления, место назначения, дата вылета, количество человек (сколько необходимо купить билетов). Возвращает список рейсов удовлетворяющих условиям.
-
 
 
 }

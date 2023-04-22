@@ -30,6 +30,19 @@ public class FlightService {
                 .toList();
     }
 
+    public List<Flight> selectById(int id) {
+        return getAll().stream()
+                .filter(x -> x.id() == id)
+                .collect(Collectors.toList());
+    }
+
+    public List<Flight> selectByFlightCode(String flightCode) {
+        return getAll().stream()
+                .filter(x -> x.getFlightCode().equals(flightCode))
+                .collect(Collectors.toList());
+    }
+
+
     public List<Flight> selectByDepartureCity(City departureCity) {
         return getAll().stream()
                 .filter(x -> x.getDepartureCity().equals(departureCity))
@@ -103,5 +116,12 @@ public class FlightService {
         flightDao.getById(flight.id()).ifPresent(value -> value.addPassengerOnBoard(passenger));
     }
 
+    public void loadData() {
+        flightDao.load();
+    }
+
+    public boolean saveData() {
+        return flightDao.save();
+    }
 
 }
