@@ -5,13 +5,10 @@ import dev.flight_app.dao.Identifiable;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Flight implements Serializable, Identifiable<Integer> {
     private static final long flightUID = 1_0L;
     private static int flightCounter = 1;
-
     private final int flightID;
     private final String flightCode;
     private final Airline airline;
@@ -20,7 +17,6 @@ public class Flight implements Serializable, Identifiable<Integer> {
     private final City arrivalCity;
     private final LocalDateTime departureDateTime;
     private final LocalDateTime arrivalDateTime;
-    private final List<Passenger> passengers;
 
     public Flight(String flightCode,
                   Airline airline,
@@ -37,7 +33,6 @@ public class Flight implements Serializable, Identifiable<Integer> {
         this.arrivalCity = arrivalCity;
         this.departureDateTime = departureDateTime;
         this.arrivalDateTime = arrivalDateTime;
-        this.passengers = new ArrayList<>();
     }
 
     public Flight(int flightID,
@@ -47,8 +42,7 @@ public class Flight implements Serializable, Identifiable<Integer> {
                   City departureCity,
                   City arrivalCity,
                   LocalDateTime departureDateTime,
-                  LocalDateTime arrivalDateTime,
-                  List<Passenger> passengers) {
+                  LocalDateTime arrivalDateTime) {
         this.flightID = flightID;
         this.flightCode = flightCode;
         this.airline = airline;
@@ -57,7 +51,6 @@ public class Flight implements Serializable, Identifiable<Integer> {
         this.arrivalCity = arrivalCity;
         this.departureDateTime = departureDateTime;
         this.arrivalDateTime = arrivalDateTime;
-        this.passengers = passengers;
     }
 
     public String getFlightCode() {
@@ -88,27 +81,17 @@ public class Flight implements Serializable, Identifiable<Integer> {
         return arrivalDateTime;
     }
 
-    public List<Passenger> getPassengers() {
-        return passengers;
+
+    public boolean addPassenger(int bookingSeats) {
+        int seatsQuantityOld = seatsQuantity;
+        seatsQuantity -= bookingSeats;
+        return seatsQuantity + bookingSeats == seatsQuantityOld;
     }
 
-    public boolean addPassengerOnBoard(Passenger passenger) {
-        passengers.add(passenger);
-        seatsQuantity--;
-        return getPassengers().get(passengers.size() - 1).equals(passenger);
-    }
-
-    public boolean addPassengerOnBoard(List<Passenger> newPassengers) {
-        int passengersListSizeOld = passengers.size();
-        passengers.addAll(newPassengers);
-        seatsQuantity -= passengers.size();
-        return passengersListSizeOld - passengers.size() == newPassengers.size();
-    }
-
-    public boolean seatsQuantityDecrement() {
-        int oldSeatsQuantity = getSeatsQuantity();
-        seatsQuantity--;
-        return getSeatsQuantity() - oldSeatsQuantity == 1;
+    public boolean removePassenger(int bookingSeats) {
+        int seatsQuantityOld = seatsQuantity;
+        seatsQuantity += bookingSeats;
+        return seatsQuantity - bookingSeats == seatsQuantityOld;
     }
 
     @Override
@@ -127,16 +110,13 @@ public class Flight implements Serializable, Identifiable<Integer> {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Flight)) return false;
-
-        Flight flight = (Flight) o;
-
+        if (!(o instanceof Flight flight)) return false;
         return flightCode.equals(flight.flightCode);
     }
 
     @Override
     public int hashCode() {
-        return flightCode.hashCode();
+        return (id()+flightCode).hashCode();
     }
 
     @Override
