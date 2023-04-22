@@ -33,8 +33,6 @@ public class Main {
         UserController UC = new UserController(US);
 
 
-
-
         Menu menu = new Menu("<<< ПОЛЕТІЛИ! >>>");
         menu.open(Selectors.Home);
     }

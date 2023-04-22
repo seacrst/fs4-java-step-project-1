@@ -1,5 +1,6 @@
 package dev.flight_app.services;
 
+import dev.flight_app.entities.Console;
 import dev.flight_app.controllers.FlightController;
 
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ public class EventService {
     public String read() {return value;}
 
     public void displayAllFlights() {
-        flight.displayAllFlights();
+        flight.allFlights().forEach(Console::output);
     }
 
     public void createBooking(ArrayList<String> bookingData) {
