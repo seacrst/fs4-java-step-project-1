@@ -51,6 +51,9 @@ public class User implements Serializable, Identifiable<String> {
     public void addBookings(Booking booking){
         userBookings.add(booking);
     }
+    public void cancelBookings(Booking booking){
+        userBookings.remove(booking);
+    }
     @Override
     public String toString() {
         return String.format("%s %s (%s)\nBookings:\n%s", name, surname, login, userBookingsInPrettyFormat());
