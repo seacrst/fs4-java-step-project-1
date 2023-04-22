@@ -110,11 +110,11 @@ public class Flight implements Serializable, Identifiable<Integer> {
                 flightID,
                 flightCode,
                 departureDateTime.format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")),
-                departureCity.toString().replace("_"," "),
-                arrivalCity.toString().replace("_"," "),
+                departureCity,
+                arrivalCity,
                 arrivalDateTime.format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")),
                 seatsQuantity,
-                airline.toString().replace("_"," "));
+                airline);
     }
 
     @Override

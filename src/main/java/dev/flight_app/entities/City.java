@@ -50,4 +50,9 @@ public enum City {
     public String getCode() {
         return code;
     }
+
+    @Override
+    public String toString() {
+        return name().replace("_"," ");
+    }
 }
