@@ -1,5 +1,6 @@
 package dev.flight_app.controllers;
 
+import dev.flight_app.entities.Console;
 import dev.flight_app.dao.FlightDao;
 import dev.flight_app.entities.Flight;
 import dev.flight_app.services.FlightService;
@@ -51,9 +52,7 @@ public class FlightController {
     }
 
     public void displayAllFlights() {
-        List<Flight> temp = allFlights();
-        for (Flight flight : temp)
-            System.out.println(flight);
+        allFlights().forEach(Console::output);
     }
 
     public void loadData() {

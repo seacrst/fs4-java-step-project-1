@@ -17,6 +17,9 @@ public abstract class Console {
     public static void output(String str) {
         System.out.println(str);
     }
+    public static void output(Flight f) {
+        System.out.println(f);
+    }
 
 
 }
