@@ -1,48 +1,21 @@
 package dev.flight_app.entities;
 
-import dev.flight_app.events.Actions;
+import dev.flight_app.controllers.MenuController;
 import dev.flight_app.events.Event;
 import dev.flight_app.events.Selector;
 import dev.flight_app.services.EventService;
 import dev.flight_app.services.MenuService;
+import dev.flight_app.services.Selectors;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
+import java.util.function.Function;
 
-public class Menu extends Console {
-
-    private final MenuService menus = new MenuService();
-
-    public Menu() {
-        super();
+public class Menu {
+    private final MenuController menu = new MenuController();
+    public Menu(String msg) {
+        Console.output(msg);
     }
 
-    public static void createSelector(Selector sel) {
-
+    public void open(Selectors sel) {
+        menu.switchTo(sel.getState());
     }
-
-    public void select(Selector sel, Menu menu) {
-        if (menus.getCurrent().equals(sel.triggerValue())) {
-            menu.open();
-        }
-    }
-
-    private boolean closed = false;
-
-    public void open() {
-       while (!closed) {
-
-       }
-    }
-
-    public void close() {
-        closed = true;
-    }
-
-    public void create(String name) {
-        Event<String> ev = new Event<>(Actions.Search);
-        String listen = ev.listen(s -> s + "\n");
-
-    }
-
 }

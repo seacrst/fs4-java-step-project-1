@@ -1,6 +1,8 @@
 package dev.flight_app.services;
 
-public class EventService implements EventInteract {
+import java.util.ArrayList;
+
+public class EventService {
 
     private String value = "";
     private static EventService instance = null;
@@ -12,34 +14,30 @@ public class EventService implements EventInteract {
             return instance;
         }
 
-        return new EventService();
+        instance = new EventService();
+
+        return  instance;
     }
 
-    public void handle(String val) {
-        value = val;
-    }
+    public String read() {return value;}
 
-    @Override
-    public void register() {
-
-    }
-
-    public void createBooking() {
+    public void displayAllFlights() {
 
     }
 
-    @Override
-    public void search() {
+    public void createBooking(ArrayList<String> bookingData) {
 
     }
 
-    @Override
-    public void display() {
-
+    public String findBookingByPassengerData(ArrayList<String> passengerData) {
+        return "";
     }
 
-    @Override
-    public void cancel() {
+    public String findBookingById(String id) {
+        return "";
+    }
 
+    public void cancelBooking(String id) {
+        findBookingById(id);
     }
 }
