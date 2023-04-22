@@ -8,11 +8,11 @@ import dev.flight_app.entities.User;
 import java.util.*;
 
 public class UserService {
-    private final UserDao userDao;
+    private final UserDao userDao= new UserDao();
     private final Map<String, User> loggedInUser = new HashMap<>();
 
-    public UserService(UserDao userDao) {
-        this.userDao = userDao;
+    public UserService() {
+
     }
     public Map<String, User> getAllUsers() {
         return userDao.getAll();

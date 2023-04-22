@@ -25,8 +25,7 @@ public class BookingServiceTest {
     Flight flight;
     @BeforeEach
     void setUp(){
-        BD = new BookingDao();
-        BS = new BookingService(BD);
+        BS = new BookingService();
         passengers = new ArrayList<>();
         passengers.add(new Passenger("Nina", "Smith"));
         flight = new Flight("code", RYANAIR, 100, BERN, BRATISLAVA, LocalDateTime.now(), LocalDateTime.now());
@@ -108,8 +107,8 @@ public class BookingServiceTest {
         boolean result = BS.saveData();
         assertTrue(result);
 
-        BookingDao dao2 = new BookingDao();
-        BookingService BS2 = new BookingService(dao2);
+
+        BookingService BS2 = new BookingService();
         BS2.loadData();
 
         Map<Integer, Booking> resultBS = BS.getAllBookings();

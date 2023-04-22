@@ -3,6 +3,7 @@ package dev.flight_app.services;
 import dev.flight_app.Console;
 import dev.flight_app.DuplicateBookingException;
 import dev.flight_app.dao.BookingDao;
+import dev.flight_app.dao.FlightDao;
 import dev.flight_app.entities.Booking;
 import dev.flight_app.entities.Flight;
 import dev.flight_app.entities.Passenger;
@@ -14,9 +15,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class BookingService {
-    private final BookingDao bookingDao;
-    public BookingService(BookingDao bookingDao) {
-        this.bookingDao = bookingDao;
+    private final BookingDao bookingDao = new BookingDao();
+    public BookingService() {
     }
     public Map<Integer, Booking> getAllBookings() {
         return bookingDao.getAll();

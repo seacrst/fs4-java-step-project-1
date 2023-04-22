@@ -14,8 +14,7 @@ public class UserServiceTest {
     UserService US;
     @BeforeEach
     void setUp(){
-        UD = new UserDao();
-        US = new UserService(UD);
+        US = new UserService();
     }
 
     @Test
@@ -88,8 +87,7 @@ public class UserServiceTest {
         boolean result = US.saveData();
         assertTrue(result);
 
-        UserDao dao2 = new UserDao();
-        UserService US2 = new UserService(dao2);
+        UserService US2 = new UserService();
         US2.loadData();
 
         Map<String, User> resultBS = US.getAllUsers();

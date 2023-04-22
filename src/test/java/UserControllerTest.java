@@ -25,8 +25,8 @@ public class UserControllerTest {
     private List<Passenger> passenger;
     @BeforeEach
     void setUp(){
-        USMock = mock(UserService.class);
-        UC = new UserController(USMock);
+//        USMock = mock(UserService.class);
+        UC = UserController.create();
         user = new User(1, "test", "password", "Nina", "Smith");
         passenger = new ArrayList<>();
         passenger.add(new Passenger("Nina", "Smith"));
@@ -96,8 +96,8 @@ public class UserControllerTest {
     @Test
     public void testLogIn(){
         when(USMock.logIn("test", "password")).thenReturn(Optional.of(user));
-        Optional<User> user1 = UC.logIn("test", "password");
-        assertTrue(user1.isPresent());
+        User user1 = UC.logIn("test", "password");
+        assertNotNull(user1);
     }
     @Test
     public void testLogout(){
