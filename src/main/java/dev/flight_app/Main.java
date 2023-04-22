@@ -16,8 +16,8 @@ public class Main {
     public static void main(String[] args) {
 //
 //        BookingDao BD = new BookingDao();
-//        BookingService BS = new BookingService(BD);
 //        BookingController BC = new BookingController(BS);
+//        BookingService BS = new BookingService(BD);
 //
 ////        FlightDao FD = new FlightDao();
 //

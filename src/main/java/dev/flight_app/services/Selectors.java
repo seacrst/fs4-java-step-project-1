@@ -6,9 +6,8 @@ public enum Selectors {
     AllFlights("/all-flights", "2"),
     MyFlights("/my-flights", "3"),
     CreateBooking("/new-booking", "4"),
-    SearchBooking("/find-booking", "5"),
-    GetFlight("/get-flight", "6"),
-    CancelBooking("/cancel-flight", "7"),
+    FindFlight("/find-flight", "5"),
+    CancelBooking("/cancel-flight", "6"),
     Exit("/exit", "!0");
 
     private final String sel;

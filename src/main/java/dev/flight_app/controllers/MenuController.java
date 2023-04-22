@@ -25,9 +25,8 @@ public class MenuController {
         actions.put("2", Selectors.AllFlights.getState());
         actions.put("3", Selectors.MyFlights.getState());
         actions.put("4", Selectors.CreateBooking.getState());
-        actions.put("5", Selectors.SearchBooking.getState());
-        actions.put("6", Selectors.GetFlight.getState());
-        actions.put("7", Selectors.CancelBooking.getState());
+        actions.put("5", Selectors.FindFlight.getState());
+        actions.put("6", Selectors.CancelBooking.getState());
         actions.put("!0", Selectors.Exit.getState());
     }
 
@@ -53,9 +52,8 @@ public class MenuController {
     2. Display all flights
     3. My flights
     4. Booking
-    5. Search
-    6. Display flight
-    7. Cancel booking
+    5. Search flight
+    6. Cancel booking
     0. Exit
 """;
 
@@ -70,7 +68,7 @@ public class MenuController {
     private static final String readPassengerSurnamePrompt = "Прізвище: ";
     private static final String readPassengerSurnamePromptEng = "Surname: ";
     private static final String searchBookingByIdPrompt = "Введіть ID рейсу: ";
-    private static final String searchBookingByIdPromptEng = "Enter flight ID: ";
+    private static final String searchFlightByIdPromptEng = "Enter flight ID: ";
     private static final String cancelBookingById = "Введіть ID бронювання: ";
     private static final String cancelBookingByIdEng = "Enter booking ID: ";
     private static final String getBackPrompt = "0. Назад: ";
@@ -99,18 +97,17 @@ public class MenuController {
     public void toMyFlightsMenu() {
         clear();
         ArrayList<String> passengerData = Event.collectData(Event::print, readPassengerNamePromptEng, readPassengerSurnamePromptEng);
-        String response = events.findBookingByPassengerData(passengerData);
-        menus.displayMessage(response);
-        Event.print(getBackPrompt);
+        events.findBookingByPassengerData(passengerData).forEach(Console::output);
+        Event.print(getBackPromptEng);
         switchTo(actions.get(Event.readLine()));
     }
 
-    public void toBookingSearchMenu() {
+    public void toFlightSearchMenu() {
         clear();
-        menus.displayMessage(searchBookingByIdPromptEng);
-        String response = events.findBookingById(Event.readLine());
+        menus.displayMessage(searchFlightByIdPromptEng);
+        String response = events.findFlightById(Event.readLine());
         menus.displayMessage(response);
-        Event.print(getBackPrompt);
+        Event.print(getBackPromptEng);
         switchTo(actions.get(Event.readLine()));
     }
 
@@ -147,7 +144,7 @@ public class MenuController {
                 case "/all-flights" -> toAllFlightsMenu();
                 case "/my-flights" -> toMyFlightsMenu();
                 case "/new-booking" -> toBookingMenu();
-                case "/find-booking" -> toBookingSearchMenu();
+                case "/find-flight" -> toFlightSearchMenu();
                 case "/get-flight" -> toFlight();
                 case "/cancel-flight" -> toCancelBookingMenu();
                 case "/exit" -> terminate();

@@ -20,6 +20,9 @@ public abstract class Console {
     public static void output(Flight f) {
         System.out.println(f);
     }
+    public static void output(Booking b) {
+        System.out.println(b);
+    }
 
 
 }
