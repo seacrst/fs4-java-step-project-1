@@ -92,13 +92,20 @@ public class Flight implements Serializable, Identifiable<Integer> {
         return passengers;
     }
 
-    public boolean addPassengerOnBoard(Passenger passenger){
+    public boolean addPassengerOnBoard(Passenger passenger) {
         passengers.add(passenger);
-        seatsQuantityDecrement();
-        return getPassengers().get(passengers.size()-1).equals(passenger);
+        seatsQuantity--;
+        return getPassengers().get(passengers.size() - 1).equals(passenger);
     }
 
-    public boolean seatsQuantityDecrement(){
+    public boolean addPassengerOnBoard(List<Passenger> newPassengers) {
+        int passengersListSizeOld = passengers.size();
+        passengers.addAll(newPassengers);
+        seatsQuantity -= passengers.size();
+        return passengersListSizeOld - passengers.size() == newPassengers.size();
+    }
+
+    public boolean seatsQuantityDecrement() {
         int oldSeatsQuantity = getSeatsQuantity();
         seatsQuantity--;
         return getSeatsQuantity() - oldSeatsQuantity == 1;

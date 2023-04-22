@@ -124,6 +124,10 @@ public class FlightService {
         flightDao.getById(flight.id()).ifPresent(value -> value.addPassengerOnBoard(passenger));
     }
 
+    public void addPassengerOnboard(Flight flight, List<Passenger> passengers) {
+        flightDao.getById(flight.id()).ifPresent(value -> value.addPassengerOnBoard(passengers));
+    }
+
     public void loadData() {
         flightDao.load();
     }
