@@ -43,10 +43,7 @@ public interface DB<I, E> {
         Map<I, E> list = new HashMap<>();
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(file))) {
             list = (Map<I, E>) in.readObject();
-            if(list == null){
-                list = new HashMap<>();
-            }
-            System.out.println("Дані успішно завантажені!");
+            System.out.println("Data successfully loaded!!");
             return list;
         } catch (IOException | ClassNotFoundException ex) {
             System.out.println("Error loading data: " + ex.getMessage());
