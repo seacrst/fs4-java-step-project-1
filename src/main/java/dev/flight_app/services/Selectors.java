@@ -7,7 +7,7 @@ public enum Selectors {
     MyFlights("/my-flights", "3"),
     CreateBooking("/new-booking", "4"),
     SearchBooking("/find-booking", "5"),
-    GetFlight("/flight", "6"),
+    GetFlight("/get-flight", "6"),
     CancelBooking("/cancel-flight", "7"),
     Exit("/exit", "!0");
 

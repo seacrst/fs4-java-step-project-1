@@ -14,26 +14,26 @@ import dev.flight_app.services.UserService;
 
 public class Main {
     public static void main(String[] args) {
+//
+//        BookingDao BD = new BookingDao();
+//        BookingService BS = new BookingService(BD);
+//        BookingController BC = new BookingController(BS);
+//
+////        FlightDao FD = new FlightDao();
+//
+////        FlightService FS = new FlightService(FD);
+//
+//        FlightController FC = FlightController.create();
+//
+//        FC.loadData();
+//
+//
+//        UserDao UD = new UserDao();
+//        UserService US = new UserService(UD);
+//        UserController UC = new UserController(US);
 
-        BookingDao BD = new BookingDao();
-        BookingService BS = new BookingService(BD);
-        BookingController BC = new BookingController(BS);
 
-//        FlightDao FD = new FlightDao();
-
-//        FlightService FS = new FlightService(FD);
-
-        FlightController FC = FlightController.create();
-
-        FC.loadData();
-
-
-        UserDao UD = new UserDao();
-        UserService US = new UserService(UD);
-        UserController UC = new UserController(US);
-
-
-        Menu menu = new Menu("<<< ПОЛЕТІЛИ! >>>");
+        Menu menu = new Menu("<<< Welcome! >>>");
         menu.open(Selectors.Home);
     }
 }

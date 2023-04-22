@@ -48,19 +48,38 @@ public class MenuController {
     0. Вихід
 """;
 
+    private static final String homePromptEng = """
+    1. Register
+    2. Display all flights
+    3. My flights
+    4. Booking
+    5. Search
+    6. Display flight
+    7. Cancel booking
+    0. Exit
+""";
+
     private static final String createBookingArrivalPrompt = "Місце призначення: ";
+    private static final String createBookingArrivalPromptEng = "Destination: ";
     private static final String createBookingDatePrompt = "Дата: ";
+    private static final String createBookingDatePromptEng = "Date: ";
     private static final String createBookingPassengersPrompt = "Кількість пасажирів: ";
+    private static final String createBookingPassengersPromptEng = "Amount of passengers: ";
     private static final String readPassengerNamePrompt = "Ім'я: ";
+    private static final String readPassengerNamePromptEng = "Name: ";
     private static final String readPassengerSurnamePrompt = "Прізвище: ";
+    private static final String readPassengerSurnamePromptEng = "Surname: ";
     private static final String searchBookingByIdPrompt = "Введіть ID рейсу: ";
+    private static final String searchBookingByIdPromptEng = "Enter flight ID: ";
     private static final String cancelBookingById = "Введіть ID бронювання: ";
+    private static final String cancelBookingByIdEng = "Enter booking ID: ";
     private static final String getBackPrompt = "0. Назад: ";
+    private static final String getBackPromptEng = "0. Back: ";
 
 
     public void toHomeMenu() {
         clear();
-        menus.displayMessage(MenuController.homePrompt);
+        menus.displayMessage(MenuController.homePromptEng);
         String s = Event.readLine();
 
         switchTo(actions.get(s.equals("0") ? String.format("!%s", s) : s));
@@ -73,13 +92,13 @@ public class MenuController {
     public void toAllFlightsMenu() {
         clear();
         events.displayAllFlights();
-        Event.print(getBackPrompt);
+        Event.print(getBackPromptEng);
         switchTo(actions.get(Event.readLine()));
     }
 
     public void toMyFlightsMenu() {
         clear();
-        ArrayList<String> passengerData = Event.collectData(Event::print, readPassengerNamePrompt, readPassengerSurnamePrompt);
+        ArrayList<String> passengerData = Event.collectData(Event::print, readPassengerNamePromptEng, readPassengerSurnamePromptEng);
         String response = events.findBookingByPassengerData(passengerData);
         menus.displayMessage(response);
         Event.print(getBackPrompt);
@@ -88,7 +107,7 @@ public class MenuController {
 
     public void toBookingSearchMenu() {
         clear();
-        menus.displayMessage(searchBookingByIdPrompt);
+        menus.displayMessage(searchBookingByIdPromptEng);
         String response = events.findBookingById(Event.readLine());
         menus.displayMessage(response);
         Event.print(getBackPrompt);
@@ -97,7 +116,7 @@ public class MenuController {
 
     public void toBookingMenu() {
         clear();
-        ArrayList<String> bookingData = Event.collectData(Event::print, createBookingArrivalPrompt, createBookingDatePrompt, createBookingPassengersPrompt);
+        ArrayList<String> bookingData = Event.collectData(Event::print, createBookingArrivalPromptEng, createBookingDatePromptEng, createBookingPassengersPromptEng);
         events.createBooking(bookingData);
         switchTo("/index");
     }
@@ -108,7 +127,7 @@ public class MenuController {
 
     public void toCancelBookingMenu() {
         clear();
-        menus.displayMessage(cancelBookingById);
+        menus.displayMessage(cancelBookingByIdEng);
         events.cancelBooking(actions.get(Event.readLine()));
     }
 
@@ -139,7 +158,7 @@ public class MenuController {
 
     private void terminate() {
         clear();
-        Event.print("TERMINATED");
+        Console.output("Good bye");
         closed = true;
     }
 
