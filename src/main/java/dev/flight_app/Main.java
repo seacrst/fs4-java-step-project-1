@@ -16,13 +16,16 @@ public class Main {
     public static void main(String[] args) {
 
         BookingDao BD = new BookingDao();
-        FlightDao FD = new FlightDao();
-
         BookingService BS = new BookingService(BD);
-        FlightService FS = new FlightService(FD);
-
         BookingController BC = new BookingController(BS);
-        FlightController FC = new FlightController(FS);
+
+//        FlightDao FD = new FlightDao();
+
+//        FlightService FS = new FlightService(FD);
+
+        FlightController FC = FlightController.create();
+
+        FC.loadData();
 
 
         UserDao UD = new UserDao();

@@ -17,10 +17,9 @@ import java.util.stream.Collectors;
 
 public class FlightService {
 
-    public final FlightDao flightDao;
+    public final FlightDao flightDao = new FlightDao();
 
-    public FlightService(FlightDao flightDao) {
-        this.flightDao = flightDao;
+    public FlightService() {
     }
 
     public List<Flight> getAll() {

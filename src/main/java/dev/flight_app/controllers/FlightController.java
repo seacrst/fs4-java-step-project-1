@@ -1,15 +1,40 @@
 package dev.flight_app.controllers;
 
+import dev.flight_app.dao.FlightDao;
 import dev.flight_app.entities.Flight;
 import dev.flight_app.services.FlightService;
 
 import java.util.List;
+import java.util.Objects;
 
 public class FlightController {
-    private final FlightService flightService;
 
-    public FlightController(FlightService flightService) {
-        this.flightService = flightService;
+    private static FlightController fc = null;
+    private final FlightService flightService = new FlightService();
+
+//    private final FlightService flightService;
+    private FlightDao flightDao;
+
+//    public FlightController() {
+//        this.flightDao = new FlightDao();
+//        this.flightService = new FlightService();
+//    }
+//    public FlightController(FlightService flightService) {
+//        this.flightService = flightService;
+//    }
+
+    private FlightController() {
+
+    }
+
+    public static FlightController create() {
+        if (!Objects.isNull(fc)) {
+            return fc;
+        }
+
+        fc = new FlightController();
+
+        return fc;
     }
 
     public List<Flight> selectById(int id) {

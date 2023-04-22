@@ -1,9 +1,12 @@
 package dev.flight_app.services;
 
+import dev.flight_app.controllers.FlightController;
+
 import java.util.ArrayList;
 
 public class EventService {
 
+    private final FlightController flight = FlightController.create();
     private String value = "";
     private static EventService instance = null;
     private EventService() {
@@ -22,7 +25,7 @@ public class EventService {
     public String read() {return value;}
 
     public void displayAllFlights() {
-
+        flight.displayAllFlights();
     }
 
     public void createBooking(ArrayList<String> bookingData) {
