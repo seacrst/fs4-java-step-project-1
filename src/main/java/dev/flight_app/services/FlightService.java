@@ -30,10 +30,8 @@ public class FlightService {
                 .toList();
     }
 
-    public List<Flight> selectById(int id) {
-        return getAll().stream()
-                .filter(x -> x.id() == id)
-                .collect(Collectors.toList());
+    public Optional<Flight> selectById(int id) {
+        return flightDao.getById(id);
     }
 
     public List<Flight> selectByFlightCode(String flightCode) {

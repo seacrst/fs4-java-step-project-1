@@ -10,6 +10,7 @@ import dev.flight_app.services.FlightService;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 public class FlightController {
 
@@ -38,7 +39,7 @@ public class FlightController {
         return fc;
     }
 
-    public List<Flight> selectById(String idString) {
+    public Optional<Flight> selectById(String idString) {
         int id = Validation.stringToFlightId(idString);
         return flightService.selectById(id);
     }
