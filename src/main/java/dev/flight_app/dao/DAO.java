@@ -14,9 +14,7 @@ public interface DAO<ID, E extends Identifiable<ID>> {
         return delete(o.id());
     }
 
-    void save(E e);
-
     void load();
 
-    boolean saveToFile();
+    boolean save();
 }

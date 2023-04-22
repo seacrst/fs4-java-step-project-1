@@ -49,14 +49,19 @@ public class Validation {
         return false;
     }
     public boolean validateDate(String s){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         try {
             LocalDate date = LocalDate.parse(s, formatter);
             return true;
         } catch (DateTimeParseException ex) {
-            System.out.println("Incorrect date format. The required format is \"dd/MM/yyyy\"");
+            System.out.println("Incorrect date format. The required format is \"dd-MM-yyyy\"");
             return false;
         }
     }
+
+    public static LocalDate stringToDate (String s) {
+            return LocalDate.parse(s);
+    }
+
 
 }

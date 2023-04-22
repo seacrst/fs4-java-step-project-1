@@ -1,19 +1,21 @@
 package dev.flight_app.entities;
 
+import dev.flight_app.dao.Identifiable;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Flight implements Serializable {
+public class Flight implements Serializable, Identifiable<Integer> {
     private static final long flightUID = 1_0L;
     private static int flightCounter = 1;
 
     private final int flightID;
     private final String flightCode;
     private final Airline airline;
-    private final int seatsQuantity;
+    private int seatsQuantity;
     private final City departureCity;
     private final City arrivalCity;
     private final LocalDateTime departureDateTime;
@@ -58,10 +60,6 @@ public class Flight implements Serializable {
         this.passengers = passengers;
     }
 
-    public int getFlightID() {
-        return flightID;
-    }
-
     public String getFlightCode() {
         return flightCode;
     }
@@ -94,17 +92,29 @@ public class Flight implements Serializable {
         return passengers;
     }
 
+    public boolean addPassengerOnBoard(Passenger passenger){
+        passengers.add(passenger);
+        seatsQuantityDecrement();
+        return getPassengers().get(passengers.size()-1).equals(passenger);
+    }
+
+    public boolean seatsQuantityDecrement(){
+        int oldSeatsQuantity = getSeatsQuantity();
+        seatsQuantity--;
+        return getSeatsQuantity() - oldSeatsQuantity == 1;
+    }
+
     @Override
     public String toString() {
         return String.format("| %-3d | %s | %s |\u001B[34m %-11s \u001B[0m---\u001B[33m %11s \u001B[0m| %s | %3d | %-16s",
                 flightID,
                 flightCode,
-                departureDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")),
-                departureCity.toString().replace("_"," "),
-                arrivalCity.toString().replace("_"," "),
-                arrivalDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")),
+                departureDateTime.format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")),
+                departureCity,
+                arrivalCity,
+                arrivalDateTime.format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")),
                 seatsQuantity,
-                airline.toString().replace("_"," "));
+                airline);
     }
 
     @Override
@@ -121,5 +131,11 @@ public class Flight implements Serializable {
     public int hashCode() {
         return flightCode.hashCode();
     }
+
+    @Override
+    public Integer id() {
+        return flightID;
+    }
+
 }
 
