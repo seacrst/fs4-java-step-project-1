@@ -92,7 +92,7 @@ public class Validation {
         s = stringNormalisation(s);
         try {
             int id = Integer.parseInt(s);
-            return id > 0 && id <= 500;
+            return true;
         } catch (IllegalArgumentException ex) {
             System.out.println("Incorrect Flight ID format or this ID could not be found in the database.");
             return false;
