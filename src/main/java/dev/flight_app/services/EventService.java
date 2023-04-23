@@ -12,11 +12,9 @@ import dev.flight_app.entities.*;
 public class EventService {
     private final FlightController flight;
     private final BookingController booking;
-    private final UserController user;
-    public EventService(FlightController flight, BookingController booking, UserController user) {
+    public EventService(FlightController flight, BookingController booking) {
         this.flight = flight;
         this.booking = booking;
-        this.user = user;
     }
 
     public void displayAllFlights() {
@@ -50,10 +48,12 @@ public class EventService {
 
     public String enterPassengerName(String prompt) {
         String name = Event.readLine(prompt);
-        if(!Validation.isValidName(name)) {
+//        if(!Validation.isValidName(name)) {
+//            enterPassengerName(prompt);
+//        }
+        while(!Validation.isValidName(name)){
             enterPassengerName(prompt);
         }
-
         return name;
     }
 
@@ -110,9 +110,9 @@ public class EventService {
 
         if (idx.equals("0")) {
             fallback.apply(null);
-        } else if (!Validation.isValidIndexQt(idx, size)) {
+        } else if (!Validation.isValidIndex(idx, size)) {
             Console.output("Incorrect flight index");
-                enterIndexOfFlight(prompt, size, fallback);
+            enterIndexOfFlight(prompt, size, fallback);
         }
 
         return idx;
@@ -120,16 +120,16 @@ public class EventService {
 
     public boolean enterBookingId(String prompt) {
         String id = Event.readLine(prompt);
-
         if (!Validation.validateNumber(id)) {
-            return enterBookingId(id);
+            enterBookingId(prompt);
+            return false;
+        } else {
+            return booking.cancelBooking(Integer.parseInt(id));
         }
-        return booking.cancelBooking(Integer.parseInt(id));
     }
 
     public void saveData() {
         flight.saveData();
         booking.saveData();
-        user.saveData();
     }
 }

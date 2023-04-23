@@ -13,26 +13,16 @@ public class Booking implements Serializable, Identifiable<Integer> {
     private final Integer id;
     private final Flight flight;
     private final List<Passenger> passenger;
-    private final User user;
-    public Booking(Integer id, Flight flight, List<Passenger> passenger, User user) {
-        this.id = id;
-        this.flight = flight;
-        this.passenger = passenger;
-        this.user = user;
-        user.addBookings(this);
-        flight.addPassenger(passenger.size());
-    }
     public Booking(Integer id, Flight flight, List<Passenger> passenger) {
         this.id = id;
         this.flight = flight;
         this.passenger = passenger;
-        this.user = null;
         flight.addPassenger(passenger.size());
     }
     @Override
     public String toString() {
         return "Booking ID: " + id +
-                "\nFlight: " + flight.toString() + passengerPrettyFormat();
+                "\nFlight: " + flight.toString() +"\n"+ passengerPrettyFormat();
     }
     private String passengerPrettyFormat(){
         return IntStream.range(0, passenger.size())
@@ -42,9 +32,6 @@ public class Booking implements Serializable, Identifiable<Integer> {
 
     public Integer getId() {
         return id;
-    }
-    public User getUser(){
-        return user;
     }
 
     public Flight getFlight() {
@@ -56,7 +43,6 @@ public class Booking implements Serializable, Identifiable<Integer> {
     }
     public void cancelBooking(){
         flight.removePassenger(passenger.size());
-        if(user != null) user.cancelBookings(this);
     }
 
     @Override

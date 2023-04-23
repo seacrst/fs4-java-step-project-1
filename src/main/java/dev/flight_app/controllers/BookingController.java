@@ -4,10 +4,8 @@
     import dev.flight_app.entities.Booking;
     import dev.flight_app.entities.Flight;
     import dev.flight_app.entities.Passenger;
-    import dev.flight_app.entities.User;
 
     import java.util.List;
-    import java.util.Map;
     import java.util.Objects;
 
     public class BookingController {
@@ -26,12 +24,6 @@
             return bookingService.myFlights(name, surname);
     }
 
-//        public List<Booking> myFlights(User user){
-//            return bookingService.myFlights(user);
-//        }
-        public Booking createNewBooking(Flight flight,List<Passenger> passengers, User user) {
-            return bookingService.createNewBooking(flight, passengers,user);
-        }
         public Booking createNewBooking(Flight flight,List<Passenger> passengers) {
             return bookingService.createNewBooking(flight, passengers);
         }

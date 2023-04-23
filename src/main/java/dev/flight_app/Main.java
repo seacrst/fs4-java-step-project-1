@@ -7,7 +7,6 @@ public class Main {
 
         menu.events.bookings().loadData();
         menu.events.flights().loadData();
-        menu.events.users().loadData();
 
         menu.open(Menu.Selectors.Home);
     }

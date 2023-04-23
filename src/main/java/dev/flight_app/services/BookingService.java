@@ -1,13 +1,11 @@
 package dev.flight_app.services;
 
-import dev.flight_app.Console;
 import dev.flight_app.DuplicateBookingException;
 import dev.flight_app.dao.BookingDao;
-import dev.flight_app.dao.FlightDao;
 import dev.flight_app.entities.Booking;
+import dev.flight_app.entities.Console;
 import dev.flight_app.entities.Flight;
 import dev.flight_app.entities.Passenger;
-import dev.flight_app.entities.User;
 
 import java.util.List;
 import java.util.Map;
@@ -23,12 +21,6 @@ public class BookingService {
     }
     public Optional<Booking> getBookingById(Integer id) {
         return bookingDao.getById(id);
-    }
-    public Booking createNewBooking(Flight flight, List<Passenger> passengers, User user){
-        Booking newBooking = new Booking(bookingDao.generateId(), flight, passengers, user);
-        checkForDuplicateBooking(newBooking);
-        bookingDao.add(newBooking);
-        return newBooking;
     }
     public Booking createNewBooking(Flight flight, List<Passenger> passengers){
         Booking newBooking = new Booking(bookingDao.generateId(), flight, passengers);
@@ -49,25 +41,15 @@ public class BookingService {
                 .values()
                 .stream()
                 .filter(b -> b.getPassenger().stream()
-                        .anyMatch(e -> e.getFirstName().equals(name) &&
-                                e.getLastName().equals(surname)))
+                        .anyMatch(e -> e.getFirstName().equalsIgnoreCase(name) &&
+                                e.getLastName().equalsIgnoreCase(surname)))
                 .collect(Collectors.toList());
         result.stream().forEach(x -> System.out.println(x.toString()));
-        return result;
-    }
-    public List<Booking> myFlights(User user){
-        List<Booking> result = bookingDao.getAll()
-                .values()
-                .stream()
-                .filter( b -> b.getUser().equals(user))
-                .collect(Collectors.toList());
-        result.stream().forEach(x -> System.out.println((result.indexOf(x)+1) + ": "+ x.toString()));
         return result;
     }
     public boolean cancelBooking(Integer id){
         Optional<Booking> booking = bookingDao.getById(id);
         if (booking.isEmpty()){
-            Console.println("Such booking don't exist.");
             return false;
         } else{
          booking.get().cancelBooking();

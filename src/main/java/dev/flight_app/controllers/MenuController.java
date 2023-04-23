@@ -2,6 +2,7 @@ package dev.flight_app.controllers;
 
 import java.util.*;
 
+import dev.flight_app.DuplicateBookingException;
 import dev.flight_app.Validation;
 import dev.flight_app.entities.*;
 import dev.flight_app.services.*;
@@ -65,7 +66,12 @@ public class MenuController {
 
     public void toMyFlightsMenu() {
         ArrayList<String> passengerData = Event.collectData(Event::print, readPassengerNamePrompt, readPassengerSurnamePrompt);
-        events.findBookingByPassengerData(passengerData).forEach(Console::output);
+        List<Booking> bookings = events.findBookingByPassengerData(passengerData);
+        if(bookings.isEmpty()){
+            Console.output("Bookings not found.");
+        }else{
+            bookings.forEach(Console::output);
+        }
         Event.print(getBackPrompt);
         switchTo(actions.get(Event.readLine()));
     }
@@ -113,9 +119,12 @@ public class MenuController {
                 return null;
             });
 
-
-            Booking booking = events.createBooking(Integer.parseInt(flightData.getSeatsAmount()), flightList.get(Integer.parseInt(idx) - 1));
-            Console.output(booking);
+            try {
+                Booking booking = events.createBooking(Integer.parseInt(flightData.getSeatsAmount()), flightList.get(Integer.parseInt(idx) - 1));
+                Console.output(booking);
+            } catch (DuplicateBookingException ex){
+                Console.output(ex.getMessage());
+            }
             toHomeMenu();
         }
     }
@@ -125,16 +134,14 @@ public class MenuController {
     }
 
     public void toCancelBookingMenu() {
-        Console.output(cancelBookingById);
         boolean result = events.enterBookingId(cancelBookingById);
 
         if (result) {
             Console.output("Deleted!");
-            toHomeMenu();
         } else {
-            Console.output("Something went wrong...");
-
+            Console.output("Such booking doesn't exist.");
         }
+        toHomeMenu();
     }
 
     public void toPreviousMenu() {

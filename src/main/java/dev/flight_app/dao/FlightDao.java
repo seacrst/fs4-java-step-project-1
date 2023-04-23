@@ -1,9 +1,7 @@
 package dev.flight_app.dao;
 
 import dev.flight_app.database.FlightDB;
-import dev.flight_app.database.UserDB;
 import dev.flight_app.entities.Flight;
-import dev.flight_app.entities.User;
 
 import java.util.HashMap;
 import java.util.Map;

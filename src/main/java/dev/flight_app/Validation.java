@@ -1,60 +1,16 @@
 package dev.flight_app;
 
-import dev.flight_app.controllers.FlightController;
-import dev.flight_app.entities.Airline;
 import dev.flight_app.entities.City;
+import dev.flight_app.entities.Console;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.stream.Stream;
 
 public class Validation {
     public static boolean isValidName(String s) {
         if (s.length() < 2) return false;
         return s.chars().allMatch(Character::isLetter);
-    }
-
-    public static boolean isValidPassword(String s) {
-        if (s.length() < 6) return false;
-        return s.chars().anyMatch(Character::isDigit) && s.chars().anyMatch(Character::isLowerCase)
-                && s.chars().anyMatch(Character::isUpperCase);
-    }
-
-    public static boolean isValidLogin(String s) {
-        if (s.length() > 2 && s.length() < 20) return false;
-        return s.chars().anyMatch(Character::isLetter) && s.chars().anyMatch(Character::isLetterOrDigit);
-    }
-
-    public static String Login(String s) {
-        while (!isValidLogin(s)) {
-            Console.println("Try again");
-            s = ScannerConstrained.nextLine();
-        }
-        return s;
-    }
-
-    public boolean isValidPassengerQt(String s) {
-        return s.chars().allMatch(c -> Character.isDigit(c) && c != '0');
-    }
-
-    public static String Pass(String s) {
-        while (!isValidPassword(s)) {
-            Console.println("Try again");
-            s = ScannerConstrained.nextLine();
-        }
-        return s;
-    }
-
-    public static boolean isValidId(String id) {
-        return id.chars().allMatch(Character::isDigit) && id.equals("0");
-    }
-
-    public boolean isValidAirline(String s) {
-        for (Airline airline : Airline.values()) {
-            if (airline.toString().equals(s.toUpperCase())) return true;
-        }
-        return false;
     }
 
     public static boolean validateDate(String s) {
@@ -97,6 +53,17 @@ public class Validation {
             return false;
         }
     }
+    public static boolean validateNumber(String s) {
+        try {
+            int id = Integer.parseInt(s);
+            return true;
+        } catch (NumberFormatException ex) {
+            Console.output("Incorrect ID format.");
+            return false;
+        } catch (NullPointerException ex) {
+            return false;
+        }
+    }
     public static boolean validateSeatsQuantity(String s) {
         try {
             int seatsQuantity = Integer.parseInt(s);
@@ -108,19 +75,11 @@ public class Validation {
         }
     }
 
-    public static boolean isValidIndexQt(String s, int qt) {
+    public static boolean isValidIndex(String s, int qt) {
         if(Validation.validateFlightId(s)){
             return Integer.parseInt(s) <= qt;
         }
         return false;
-    }
-
-    public static boolean validateNumber(String s) {
-        try {
-            int id = Integer.parseInt(s);
-            return true;
-        } catch (IllegalArgumentException ex) {        System.out.println("IncorrectID format.");
-        return false;    }
     }
 
     public static LocalDate stringToDate(String s) {
@@ -137,7 +96,5 @@ public class Validation {
     public static int stringToSeatsQuantity(String s) {
         return Integer.parseInt(s);
     }
-
-//    public static boolean
 
 }

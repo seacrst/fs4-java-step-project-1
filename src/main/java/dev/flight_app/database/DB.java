@@ -3,29 +3,29 @@ package dev.flight_app.database;
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
-
+import dev.flight_app.entities.Console;
 public interface DB<I, E> {
     default void createDir(){
         File dir = new File("./DB");
         boolean created = dir.mkdir();
-        if (created) {
-            System.out.println("Directory created!");
-        } else {
-            System.out.println("Failed to create directory!");
-        }
+//        if (created) {
+//            Console.output("Directory created!");
+//        } else {
+//            Console.output("Failed to create directory!");
+//        }
     }
     default void createFile(File file){
         File dir = new File("./DB");
         if (!dir.exists()) createDir();
         try{
             boolean success = file.createNewFile();
-            if (success) {
-                System.out.println("File created successfully!");
-            } else {
-                System.out.println("File already exists.");
-            }
+//            if (success) {
+//                Console.output("File created successfully!");
+//            } else {
+//                Console.output("File already exists.");
+//            }
         }catch (IOException ex){
-            System.out.println("An error occurred: " + ex.getMessage());
+            Console.output("An error occurred: " + ex.getMessage());
         }
     }
     default boolean write(Map<I, E> e, File file){
@@ -35,7 +35,7 @@ public interface DB<I, E> {
                  oos.writeObject(e);
                  return true;
             } catch (IOException ex) {
-                System.out.println("Error saving data: " + ex.getMessage());
+                Console.output("Error saving data: " + ex.getMessage());
                 return false;
             }
     }
@@ -43,10 +43,10 @@ public interface DB<I, E> {
         Map<I, E> list = new HashMap<>();
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(file))) {
             list = (Map<I, E>) in.readObject();
-            System.out.println("Data successfully loaded!!");
+//            Console.output("Data successfully loaded!!");
             return list;
         } catch (IOException | ClassNotFoundException ex) {
-            System.out.println("Error loading data: " + ex.getMessage());
+            Console.output("Error loading data: " + ex.getMessage());
         }
         return list;
     }
