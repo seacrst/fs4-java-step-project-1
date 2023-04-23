@@ -91,22 +91,18 @@ ________________________
         }else{
             bookings.forEach(Console::output);
         }
-        Event.print(getBackPrompt);
-        switchTo(actions.get(Event.readLine()));
+        toHomeMenu();
     }
 
     public void toFlightSearchMenu() {
-        Console.output(searchFlightByIdPrompt);
-
-        String id = Event.readLine();
+        String id = Event.readLine(searchFlightByIdPrompt);
         if (!Validation.validateFlightId(id)) {
             toFlightSearchMenu();
         } else {
             Optional<Flight> response = events.findFlightById(id);
             if (response.isPresent()) {
                 Console.output(response.get());
-                String s = Event.readLine(getBackPrompt);
-                switchTo(actions.get(s));
+                toHomeMenu();
             } else {
                 toWarningMenu(getFlightFailure);
             }
@@ -193,6 +189,4 @@ ________________________
     public void setFinalMsg(String msg) {
         terminatingMsg = msg;
     }
-
-    public boolean isClosed() {return closed;}
 }

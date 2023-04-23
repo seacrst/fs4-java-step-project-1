@@ -2,8 +2,6 @@ package dev.flight_app.services;
 
 import dev.flight_app.Validation;
 
-import java.util.function.Function;
-
 public class FlightDataCollector implements DataCollector<FlightDataCollector> {
 
     private String destination = "";
@@ -47,8 +45,6 @@ public class FlightDataCollector implements DataCollector<FlightDataCollector> {
         if (departureDate.isEmpty()) {
             if (isValidData(data)) {
                 setDepartureDate(data);
-            } else {
-
             }
         }
         if (seatsAmount.isEmpty()) setSeatsAmount(data);
@@ -59,11 +55,4 @@ public class FlightDataCollector implements DataCollector<FlightDataCollector> {
     public void validate(String data) {
 
     }
-
-//    @Override
-//    public void validate(String data) {
-//        if (!departureDate.isEmpty()) {
-////            isValidData(departureDate, validator);
-//        }
-//    }
 }
