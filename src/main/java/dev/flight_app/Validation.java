@@ -89,7 +89,6 @@ public class Validation {
     }
 
     public static boolean validateFlightId(String s) {
-        s = stringNormalisation(s);
         try {
             int id = Integer.parseInt(s);
             return true;
@@ -99,7 +98,6 @@ public class Validation {
         }
     }
     public static boolean validateSeatsQuantity(String s) {
-        s = stringNormalisation(s);
         try {
             int seatsQuantity = Integer.parseInt(s);
             return seatsQuantity >= 0 && seatsQuantity <= 400;
