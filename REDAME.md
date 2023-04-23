@@ -1,34 +1,19 @@
-Controllers
-    BookingController
-    UserController
-    FlightController
+# Step Project 1
 
-Services
-    BookingService
-    UserService
-    FlightService
+## Виконанні завдання
+****
+Валерій Швець (sxcrest)
+- Створення сутності та контроллера меню.
+- Створення котроллера та сервісу подій.
+- Збір даних через консоль з використанням валідації та перехопленням помилок
 
-DB
-    BookingDB
-    UserDB
-    FlightDB
+****
+Кобець Олександр
+- Створення котроллера, сервіса і ДАО для рейсів
+- Створення генератору рейсів
+- Створення сутностей - авіакомпанія, рейс, місто
 
-Entity
-    Booking
-    Passenger
-    City
-    Airline
-    User
-    Flight
-
-DAO
-    BookingDAO
-    UserDAO
-    FlightDAO
-
-Core
-    Console
-    FlightGenerator
-    WrongMenuSelectException
-    Menu
-    
+Хомич Ольга
+- Створення котроллера, сервіса і ДАО для бронювання.
+- Створення бази даних
+- Unit тести для  котроллера, сервіса і ДАО для бронювання та рейсів.
