@@ -139,7 +139,7 @@ public class MenuController {
     }
 
     private void terminate() {
-        if (terminatingMsg.isEmpty()) {
+        if (!terminatingMsg.isEmpty()) {
             Console.output(terminatingMsg);
         }
         closed = true;
