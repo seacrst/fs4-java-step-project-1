@@ -85,7 +85,7 @@ public class FlightServiceTest {
     }
     @Test
     public void testSelectByArrivalCity(){
-        Flight flight2 = new Flight("code1", RYANAIR, 100, KYIV, TALLINN, LocalDateTime.now(), LocalDateTime.now());
+        Flight flight2 = new Flight("code1", RYANAIR, 100, KYIV, LONDON, LocalDateTime.now(), LocalDateTime.now());
         FS.flightDao.getAll().put(flight2.id(), flight2);
         FS.flightDao.getAll().put(flight.id(), flight);
 
@@ -93,11 +93,11 @@ public class FlightServiceTest {
         assertEquals(1, selectedFlights.size());
         assertEquals(flight, selectedFlights.get(0));
 
-        selectedFlights = FS.selectByArrivalCity(TALLINN);
+        selectedFlights = FS.selectByArrivalCity(LONDON);
         assertEquals(1, selectedFlights.size());
         assertEquals(flight2, selectedFlights.get(0));
 
-        selectedFlights = FS.selectByArrivalCity(LONDON);
+        selectedFlights = FS.selectByArrivalCity(BERN);
         assertEquals(0, selectedFlights.size());
     }
     @Test

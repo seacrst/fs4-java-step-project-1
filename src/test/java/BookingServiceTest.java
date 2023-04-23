@@ -56,7 +56,7 @@ public class BookingServiceTest {
     @Test
     public void testMyFlights(){
         Flight flight1 = new Flight("code3", RYANAIR, 100, BERN, KYIV, LocalDateTime.now(), LocalDateTime.now());
-        Flight flight2 = new Flight("code4", RYANAIR, 100, TALLINN, KYIV, LocalDateTime.now(), LocalDateTime.now());
+        Flight flight2 = new Flight("code4", RYANAIR, 100, LONDON, KYIV, LocalDateTime.now(), LocalDateTime.now());
 
         Booking newBooking =  BS.createNewBooking(flight, passengers);
         Booking newBooking2 =  BS.createNewBooking(flight1, passengers);
@@ -80,7 +80,7 @@ public class BookingServiceTest {
     @Test
     public void testGetNextId(){
         Flight flight1 = new Flight("code3", RYANAIR, 100, BERN, KYIV, LocalDateTime.now(), LocalDateTime.now());
-        Flight flight2 = new Flight("code4", RYANAIR, 100, TALLINN, KYIV, LocalDateTime.now(), LocalDateTime.now());
+        Flight flight2 = new Flight("code4", RYANAIR, 100, LONDON, KYIV, LocalDateTime.now(), LocalDateTime.now());
 
         Booking newBooking =  BS.createNewBooking(flight, passengers);
         Booking newBooking2 =  BS.createNewBooking(flight1, passengers);

@@ -29,7 +29,7 @@ public class BookingControllerTest {
     @BeforeEach
     void setUp(){
         BSMock = Mockito.mock(BookingService.class);
-        BC = BookingController.create();
+        BC = new BookingController();
         flight = new Flight("code", RYANAIR, 100, BERN, BRATISLAVA, LocalDateTime.now(), LocalDateTime.now());
         passenger = new ArrayList<>();
         passenger.add(new Passenger("Nina", "Smith"));
@@ -42,7 +42,8 @@ public class BookingControllerTest {
         expected.add(b1);
 
         when(BSMock.myFlights("Nina", "Smith")).thenReturn(expected);
-//        BC.createNewBooking(flight, passenger);
+        BC.createNewBooking(flight, passenger);
+
         List<Booking> actual = BC.myFlights("Nina", "Smith");
 
         assertEquals(expected, actual);

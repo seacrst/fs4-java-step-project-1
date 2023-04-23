@@ -6,19 +6,10 @@
     import dev.flight_app.entities.Passenger;
 
     import java.util.List;
-    import java.util.Objects;
 
     public class BookingController {
-        private static BookingController bc;
         private final BookingService bookingService = new BookingService();
         public BookingController() {
-        }
-        public static BookingController create() {
-            if (!Objects.isNull(bc)) {
-                return bc;
-            }
-            bc = new BookingController();
-            return bc;
         }
         public List<Booking> myFlights(String name, String surname){
             return bookingService.myFlights(name, surname);

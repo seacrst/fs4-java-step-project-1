@@ -1,34 +1,19 @@
-Controllers
-    BookingController
-    UserController
-    FlightController
+# Step Project 1
 
-Services
-    BookingService
-    UserService
-    FlightService
+## Виконанні завдання
+****
 
-DB
-    BookingDB
-    UserDB
-    FlightDB
+-
+- 
+-
 
-Entity
-    Booking
-    Passenger
-    City
-    Airline
-    User
-    Flight
+****
 
-DAO
-    BookingDAO
-    UserDAO
-    FlightDAO
+- 
+- 
+- 
 
-Core
-    Console
-    FlightGenerator
-    WrongMenuSelectException
-    Menu
-    
+Хомич Ольга
+- Створення котроллера, сервіса і ДАО для бронювання.
+- Створення бази даних
+- Unit тести для  котроллера, сервіса і ДАО для бронювання та рейсів.
