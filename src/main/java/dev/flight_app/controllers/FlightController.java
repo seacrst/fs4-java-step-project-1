@@ -1,6 +1,6 @@
 package dev.flight_app.controllers;
 
-import dev.flight_app.Validation;
+import dev.flight_app.common.Validation;
 import dev.flight_app.entities.City;
 import dev.flight_app.entities.Flight;
 import dev.flight_app.services.FlightService;

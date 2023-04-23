@@ -1,8 +1,6 @@
 package dev.flight_app.services;
 
-import dev.flight_app.Validation;
-
-import java.util.function.Function;
+import dev.flight_app.common.Validation;
 
 public class FlightDataCollector implements DataCollector<FlightDataCollector> {
 

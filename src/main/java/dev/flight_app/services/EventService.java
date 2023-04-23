@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 import java.util.function.Function;
 
-import dev.flight_app.Validation;
+import dev.flight_app.common.Validation;
 import dev.flight_app.controllers.*;
 import dev.flight_app.entities.*;
 

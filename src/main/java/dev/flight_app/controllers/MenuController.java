@@ -2,8 +2,8 @@ package dev.flight_app.controllers;
 
 import java.util.*;
 
-import dev.flight_app.DuplicateBookingException;
-import dev.flight_app.Validation;
+import dev.flight_app.common.DuplicateBookingException;
+import dev.flight_app.common.Validation;
 import dev.flight_app.entities.*;
 import dev.flight_app.services.*;
 

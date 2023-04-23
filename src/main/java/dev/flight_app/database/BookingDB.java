@@ -1,6 +1,5 @@
 package dev.flight_app.database;
 
-import dev.flight_app.FlightGenerator;
 import dev.flight_app.entities.Booking;
 
 import java.io.File;
