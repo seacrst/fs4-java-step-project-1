@@ -55,6 +55,9 @@ ________________________
 
     public String selectMenu(String option, int maxOptions) throws InvalidMenuOptionException {
         try {
+            if (option.length()>1){
+                throw  new InvalidMenuOptionException(incorrectInputPrompt);
+            }
             int optNumber = Integer.parseInt(option);
 
             if (optNumber > maxOptions || optNumber < 0) {
