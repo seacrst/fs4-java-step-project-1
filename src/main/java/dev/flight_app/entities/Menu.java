@@ -2,15 +2,30 @@ package dev.flight_app.entities;
 
 import dev.flight_app.controllers.EventController;
 import dev.flight_app.controllers.MenuController;
-import dev.flight_app.events.Event;
-import dev.flight_app.events.Selector;
-import dev.flight_app.services.EventService;
-import dev.flight_app.services.MenuService;
-import dev.flight_app.services.Selectors;
-
-import java.util.function.Function;
 
 public class Menu {
+
+    public enum Selectors {
+        Home("/index", "0"),
+        Register("/register", "1"),
+        AllFlights("/all-flights", "2"),
+        MyFlights("/my-flights", "3"),
+        CreateBooking("/new-booking", "4"),
+        FindFlight("/find-flight", "5"),
+        CancelBooking("/cancel-flight", "6"),
+        Exit("/exit", "!0");
+
+        private final String sel;
+        private final String id;
+
+        Selectors(String s, String id) {
+            sel = s;
+            this.id = id;
+        }
+
+        public String getState() {return sel;}
+        public String getId() {return id;}
+    }
 
     public final EventController events = new EventController();
     private final MenuController menu = new MenuController(events);

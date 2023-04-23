@@ -1,7 +1,6 @@
 package dev.flight_app;
 
 import dev.flight_app.entities.Menu;
-import dev.flight_app.services.Selectors;
 public class Main {
     public static void main(String[] args) {
         Menu menu = new Menu("<<< Welcome! >>>", "Good bye");
@@ -10,6 +9,6 @@ public class Main {
         menu.events.flights().loadData();
         menu.events.users().loadData();
 
-        menu.open(Selectors.Home);
+        menu.open(Menu.Selectors.Home);
     }
 }

@@ -1,18 +1,11 @@
 package dev.flight_app.services;
 
-import dev.flight_app.controllers.BookingController;
-import dev.flight_app.controllers.MenuController;
-import dev.flight_app.controllers.UserController;
-import dev.flight_app.entities.Booking;
-import dev.flight_app.entities.Console;
-import dev.flight_app.controllers.FlightController;
-import dev.flight_app.entities.Flight;
-import dev.flight_app.entities.Passenger;
-import dev.flight_app.events.Event;
-
-import java.util.ArrayList;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Optional;
+
+import dev.flight_app.controllers.*;
+import dev.flight_app.entities.*;
 
 public class EventService {
     private final FlightController flight;
@@ -28,36 +21,24 @@ public class EventService {
         flight.allFlights().forEach(Console::output);
     }
 
-    public void createBooking(ArrayList<String> bookingData) {
-        String city = "";
-        String date = "";
-        String seats = "";
+    public List<Flight> selectFlight(FlightDataCollector flightData) {
+        return flight.selectByCityDateSeats(flightData.getDestination(), flightData.getDepartureDate(), flightData.getSeatsAmount());
+    }
 
-        if (bookingData.size() == 3) {
-            city = bookingData.get(0);
-            date = bookingData.get(1);
-            seats = bookingData.get(2);
-        }
-
-        List<Flight> flights = flight.selectByCityDateSeats(city, date, seats);
-        flights.forEach(Console::output);
-        String id = Event.readLine();
-        Optional<Flight> flt = findFlightById(id);
+    public void createBooking(int seats, Flight flt) {
         List<Passenger> passengers = new ArrayList<>();
         ArrayList<String> names = new ArrayList<>();
 
-        for (int i = 1; i <= Integer.parseInt(seats); i ++) {
-            passengers.add(Event.collectPassengersData(
+        for (int i = 1; i <= seats; i ++) {
+            Passenger p = (Event.collectPassengersData(
                     Event::print, String.format("Enter name of passenger: %s", i),
                     String.format("Enter surname of passenger: %s", i)
             ));
+
+            passengers.add(p);
         }
 
-        flt.ifPresent(f -> {
-            Booking bkg = booking.createNewBooking(f, passengers);
-
-            Console.output(bkg);
-        });
+        booking.createNewBooking(flt, passengers);
     }
 
     public List<Booking> findBookingByPassengerData(ArrayList<String> passengerData) {

@@ -1,21 +1,25 @@
-package dev.flight_app.events;
+package dev.flight_app.entities;
 
-import dev.flight_app.entities.Console;
-import dev.flight_app.entities.Passenger;
+import dev.flight_app.services.DataCollector;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
-public class Event<T> extends Console {
+public class Event<T extends DataCollector<T>> extends Console {
+
+    T collector;
+
+    public Event(T collector) {
+        this.collector = collector;
+    }
 
     public static String readLine() {
         return Console.input();
     }
 
     public static String readLine(String msg) {
-        Console.output(msg);
+        print(msg);
         return Console.input();
     }
 
@@ -56,4 +60,7 @@ public class Event<T> extends Console {
         return null;
     }
 
+    public void handle(DataCollector<T> collector, String... steps) {
+        Stream.of(steps).forEach(step -> collector.collect(Event.readLine(step)));
+    }
 }

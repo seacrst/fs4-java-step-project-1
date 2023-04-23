@@ -13,8 +13,6 @@ import java.util.Objects;
 import java.util.Optional;
 
 public class FlightController {
-
-    private static FlightController fc = null;
     private final FlightService flightService = new FlightService();
 
     //    private final FlightService flightService;
@@ -29,14 +27,6 @@ public class FlightController {
 //    }
 
     public FlightController() {
-    }
-
-    public static FlightController create() {
-        if (!Objects.isNull(fc)) {
-            return fc;
-        }
-        fc = new FlightController();
-        return fc;
     }
 
     public Optional<Flight> selectById(String idString) {

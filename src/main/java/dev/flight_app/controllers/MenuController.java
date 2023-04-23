@@ -1,31 +1,24 @@
 package dev.flight_app.controllers;
 
-import dev.flight_app.entities.Console;
-import dev.flight_app.entities.Flight;
-import dev.flight_app.entities.Menu;
-import dev.flight_app.events.Event;
-import dev.flight_app.services.EventService;
-import dev.flight_app.services.MenuService;
-import dev.flight_app.services.Selectors;
-
 import java.util.*;
-import java.util.function.Function;
+
+import dev.flight_app.entities.*;
+import dev.flight_app.services.*;
 
 public class MenuController {
-    private String terminatingMsg = "";
-    private final MenuService menus = new MenuService();
+    private String terminatingMsg;
     private final EventService events;
     private static final Map<String, String> actions = new HashMap<>();
 
     static {
-        actions.put("0", Selectors.Home.getState());
-        actions.put("1", Selectors.Register.getState());
-        actions.put("2", Selectors.AllFlights.getState());
-        actions.put("3", Selectors.MyFlights.getState());
-        actions.put("4", Selectors.CreateBooking.getState());
-        actions.put("5", Selectors.FindFlight.getState());
-        actions.put("6", Selectors.CancelBooking.getState());
-        actions.put("!0", Selectors.Exit.getState());
+        actions.put("0", Menu.Selectors.Home.getState());
+        actions.put("1", Menu.Selectors.Register.getState());
+        actions.put("2", Menu.Selectors.AllFlights.getState());
+        actions.put("3", Menu.Selectors.MyFlights.getState());
+        actions.put("4", Menu.Selectors.CreateBooking.getState());
+        actions.put("5", Menu.Selectors.FindFlight.getState());
+        actions.put("6", Menu.Selectors.CancelBooking.getState());
+        actions.put("!0",Menu.Selectors.Exit.getState());
     }
 
     private boolean closed = false;
@@ -35,17 +28,6 @@ public class MenuController {
     }
 
     private static final String homePrompt = """
-    1. Зареєструватися
-    2. Показати всі рейси
-    3. Мої рейси
-    4. Забронювати
-    5. Пошук
-    6. Показати певний рейс
-    7. Відмінити
-    0. Вихід
-""";
-
-    private static final String homePromptEng = """
     1. Register
     2. Display all flights
     3. My flights
@@ -54,28 +36,19 @@ public class MenuController {
     6. Cancel booking
     0. Exit
 """;
-
-    private static final String createBookingArrivalPrompt = "Місце призначення: ";
-    private static final String createBookingArrivalPromptEng = "Destination: ";
-    private static final String createBookingDatePrompt = "Дата: ";
-    private static final String createBookingDatePromptEng = "Date: ";
-    private static final String createBookingPassengersPrompt = "Кількість пасажирів: ";
-    private static final String createBookingPassengersPromptEng = "Amount of passengers: ";
-    private static final String readPassengerNamePrompt = "Ім'я: ";
-    private static final String readPassengerNamePromptEng = "Name: ";
-    private static final String readPassengerSurnamePrompt = "Прізвище: ";
-    private static final String readPassengerSurnamePromptEng = "Surname: ";
-    private static final String searchBookingByIdPrompt = "Введіть ID рейсу: ";
-    private static final String searchFlightByIdPromptEng = "Enter flight ID: ";
-    private static final String cancelBookingById = "Введіть ID бронювання: ";
-    private static final String cancelBookingByIdEng = "Enter booking ID: ";
-    private static final String getBackPrompt = "0. Назад: ";
-    private static final String getBackPromptEng = "0. Back: ";
-    private static final String getFlightFailureEng = "Not found flight";
+    private static final String createBookingArrivalPrompt = "Destination: ";
+    private static final String createBookingDatePrompt = "Date: ";
+    private static final String createBookingPassengersPrompt = "Amount of passengers: ";
+    private static final String readPassengerNamePrompt = "Name: ";
+    private static final String readPassengerSurnamePrompt = "Surname: ";
+    private static final String searchFlightByIdPrompt = "Enter flight ID: ";
+    private static final String cancelBookingById = "Enter booking ID: ";
+    private static final String getBackPrompt = "0. Back: ";
+    private static final String getFlightFailure = "Not found flight";
 
 
     public void toHomeMenu() {
-        String s = Event.readLine(homePromptEng);
+        String s = Event.readLine(homePrompt);
         switchTo(actions.get(s.equals("0") ? String.format("!%s", s) : s));
     }
 
@@ -83,44 +56,51 @@ public class MenuController {
 
     public void toAllFlightsMenu() {
         events.displayAllFlights();
-        Event.print(getBackPromptEng);
-        switchTo(actions.get(Event.readLine()));
+        String sel = Event.readLine(getBackPrompt);
+        switchTo(actions.get(sel));
     }
 
     public void toMyFlightsMenu() {
-        ArrayList<String> passengerData = Event.collectData(Event::print, readPassengerNamePromptEng, readPassengerSurnamePromptEng);
+        ArrayList<String> passengerData = Event.collectData(Event::print, readPassengerNamePrompt, readPassengerSurnamePrompt);
         events.findBookingByPassengerData(passengerData).forEach(Console::output);
-        Event.print(getBackPromptEng);
+        Event.print(getBackPrompt);
         switchTo(actions.get(Event.readLine()));
     }
 
     public void toFlightSearchMenu() {
-        menus.displayMessage(searchFlightByIdPromptEng);
+        Console.output(searchFlightByIdPrompt);
         Optional<Flight> response = events.findFlightById(Event.readLine());
         if (response.isPresent()) {
-            menus.displayMessage(response.get().toString());
-            menus.displayMessage(searchFlightByIdPromptEng);
+            Console.output(response.get().toString());
+            Console.output(searchFlightByIdPrompt);
             String s = Event.readLine();
             switchTo(actions.get(s));
         } else {
-            toWarningMenu(getFlightFailureEng);
+            toWarningMenu(getFlightFailure);
         }
-        Event.print(getBackPromptEng);
+        Event.print(getBackPrompt);
     }
 
     public void toBookingMenu() {
-        ArrayList<String> bookingData = Event.collectData(Event::print, createBookingArrivalPromptEng, createBookingDatePromptEng, createBookingPassengersPromptEng);
-        events.createBooking(bookingData);
+        FlightDataCollector flightData = new FlightDataCollector();
+        Event<FlightDataCollector> event = new Event<>(flightData);
+        event.handle(flightData, createBookingArrivalPrompt, createBookingDatePrompt, createBookingPassengersPrompt);
+
+//        ArrayList<String> bookingData = Event.collectData(Event::print, createBookingArrivalPromptEng, createBookingDatePromptEng, createBookingPassengersPromptEng);
+        List<Flight> flightList = events.selectFlight(flightData);
+        flightList.forEach(Console::output);
+
+        Optional<Flight> flt = events.findFlightById(Event.readLine(searchFlightByIdPrompt));
+        flt.ifPresent(flight -> events.createBooking(Integer.parseInt(flightData.getSeatsAmount()), flight));
         switchTo("/index");
     }
 
     public void toFlight() {
-        menus.displayMessage(searchFlightByIdPromptEng);
-//        events.createBooking();
+
     }
 
     public void toCancelBookingMenu() {
-        menus.displayMessage(cancelBookingByIdEng);
+        Console.output(cancelBookingById);
         events.cancelBooking(actions.get(Event.readLine()));
     }
 
@@ -150,7 +130,9 @@ public class MenuController {
     }
 
     private void terminate() {
-        Console.output(terminatingMsg);
+        if (terminatingMsg.isEmpty()) {
+            Console.output(terminatingMsg);
+        }
         closed = true;
         events.saveData();
     }
