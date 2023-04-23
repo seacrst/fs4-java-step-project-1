@@ -8,6 +8,7 @@ import dev.flight_app.entities.Flight;
 import dev.flight_app.services.FlightService;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -65,7 +66,11 @@ public class FlightController {
     }
 
     public List<Flight> allFlights() {
-        return flightService.selectByDepartureCity(City.KYIV);
+        List<Flight> byCityDeparture = flightService.selectByDepartureCity(City.KYIV);
+        List<Flight> plusByDateTime = flightService.selectByDepartureDateTime(byCityDeparture, LocalDateTime.now().plusHours(24));
+        return plusByDateTime;
+
+//        return flightService.selectByDepartureCity(City.KYIV);
 //      return flightService.getAll();
     }
 

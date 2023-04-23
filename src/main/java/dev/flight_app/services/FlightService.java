@@ -5,6 +5,7 @@ import dev.flight_app.entities.City;
 import dev.flight_app.entities.Flight;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -93,6 +94,12 @@ public class FlightService {
                 .collect(Collectors.toList());
     }
 
+    public List<Flight> selectByDepartureDateTime(List<Flight> flights, LocalDateTime localDateTime){
+        return  flights.stream()
+                .filter(x-> x.getDepartureDateTime().isBefore(localDateTime))
+                .collect(Collectors.toList());
+    }
+
     public void addPassenger(Flight flight, int bookingSeats) {
         flightDao.getById(flight.id()).ifPresent(value -> value.addPassenger(bookingSeats));
     }
@@ -100,6 +107,8 @@ public class FlightService {
     public void removePassenger(Flight flight, int bookingSeats) {
         flightDao.getById(flight.id()).ifPresent(value -> value.removePassenger(bookingSeats));
     }
+
+
 
     public void loadData() {
         flightDao.load();
