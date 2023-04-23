@@ -1,6 +1,6 @@
 package dev.flight_app.entities;
 
-import dev.flight_app.Validation;
+import dev.flight_app.common.Validation;
 import dev.flight_app.services.DataCollector;
 import java.util.ArrayList;
 import java.util.function.Function;

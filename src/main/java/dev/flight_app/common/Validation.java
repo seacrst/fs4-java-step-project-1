@@ -1,4 +1,4 @@
-package dev.flight_app;
+package dev.flight_app.common;
 
 import dev.flight_app.entities.City;
 import dev.flight_app.entities.Console;

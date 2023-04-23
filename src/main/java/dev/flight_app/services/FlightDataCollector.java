@@ -1,6 +1,6 @@
 package dev.flight_app.services;
 
-import dev.flight_app.Validation;
+import dev.flight_app.common.Validation;
 
 public class FlightDataCollector implements DataCollector<FlightDataCollector> {
 
@@ -52,7 +52,5 @@ public class FlightDataCollector implements DataCollector<FlightDataCollector> {
     }
 
     @Override
-    public void validate(String data) {
-
-    }
+    public void validate(String data) {}
 }

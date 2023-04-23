@@ -1,9 +1,8 @@
 package dev.flight_app.services;
 
-import dev.flight_app.DuplicateBookingException;
+import dev.flight_app.common.DuplicateBookingException;
 import dev.flight_app.dao.BookingDao;
 import dev.flight_app.entities.Booking;
-import dev.flight_app.entities.Console;
 import dev.flight_app.entities.Flight;
 import dev.flight_app.entities.Passenger;
 

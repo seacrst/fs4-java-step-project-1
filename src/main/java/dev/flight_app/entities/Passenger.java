@@ -52,9 +52,6 @@ public class Passenger implements Serializable {
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + firstName.hashCode();
-        result = 31 * result + lastName.hashCode();
         return firstName.hashCode()+ lastName.hashCode();
     }
 }

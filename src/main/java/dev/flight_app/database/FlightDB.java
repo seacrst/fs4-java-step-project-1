@@ -1,6 +1,6 @@
 package dev.flight_app.database;
 
-import dev.flight_app.FlightGenerator;
+import dev.flight_app.common.FlightGenerator;
 import dev.flight_app.entities.Flight;
 
 import java.io.File;
