@@ -3,6 +3,7 @@ package dev.flight_app.controllers;
 import java.util.*;
 
 import dev.flight_app.DuplicateBookingException;
+import dev.flight_app.InvalidMenuOptionException;
 import dev.flight_app.Validation;
 import dev.flight_app.entities.*;
 import dev.flight_app.services.*;
@@ -29,13 +30,16 @@ public class MenuController {
     }
 
     private static final String homePrompt = """
-    1. Display all flights
-    2. My flights
-    3. Booking
-    4. Search flight
-    5. Cancel booking
-    0. Exit
+________________________
+1. Display all flights
+2. My flights
+3. Booking
+4. Search flight
+5. Cancel booking
+0. Exit
+________________________
 """;
+    private static final String enterMenuNumber = "Enter menu number: ";
     private static final String createBookingArrivalPrompt = "Destination: ";
     private static final String createBookingDatePrompt = "Date in dd-MM-yyyy format : ";
     private static final String createBookingPassengersPrompt = "Amount of passengers: ";
@@ -46,19 +50,37 @@ public class MenuController {
     private static final String selectFlightByIndex = "Select flight by line number or 0 to exit: ";
     private static final String getBackPrompt = "0. Back: ";
     private static final String getFlightFailure = "Not found flight";
+    private static final String incorrectInputPrompt = "Incorrect input. Please try again";
 
 
-    public void toHomeMenu() {
-        String s = Event.readLine(homePrompt);
-        switchTo(actions.get(s.equals("0") ? String.format("!%s", s) : s));
+    public String selectMenu(String option, int maxOptions) throws InvalidMenuOptionException {
+        try {
+            int optNumber = Integer.parseInt(option);
+
+            if (optNumber > maxOptions || optNumber < 0) {
+                throw  new InvalidMenuOptionException(incorrectInputPrompt);
+            }
+
+            return actions.get(option.equals("0") ? String.format("!%s", option) : option);
+        } catch (NumberFormatException ex) {
+            throw new InvalidMenuOptionException(incorrectInputPrompt);
+        }
     }
-
-    public void toRegisterMenu() {}
+    public void toHomeMenu() {
+        Console.output(homePrompt);
+        String s = Event.readLine(enterMenuNumber);
+        try {
+            switchTo(selectMenu(s, 5));
+        } catch (InvalidMenuOptionException ex) {
+            Console.output(ex.getMessage());
+            toHomeMenu();
+        }
+    }
 
     public void toAllFlightsMenu() {
         events.displayAllFlights();
-        String sel = Event.readLine(getBackPrompt);
-        switchTo(actions.get(sel));
+        Console.output("");
+        toHomeMenu();
     }
 
     public void toMyFlightsMenu() {
@@ -141,19 +163,14 @@ public class MenuController {
         toHomeMenu();
     }
 
-    public void toPreviousMenu() {
-        toHomeMenu();
-    }
-
-    public void toWarningMenu(String msg) {
-//        Event.readLine();
+    public String toWarningMenu(String msg) {
+        return Event.readLine(msg);
     }
 
     public void switchTo(String state) {
         while (!closed) {
             switch (state) {
                 case "/index" -> toHomeMenu();
-                case "/register" -> toRegisterMenu();
                 case "/all-flights" -> toAllFlightsMenu();
                 case "/my-flights" -> toMyFlightsMenu();
                 case "/new-booking" -> toBookingMenu();
@@ -161,7 +178,7 @@ public class MenuController {
                 case "/get-flight" -> toFlight();
                 case "/cancel-flight" -> toCancelBookingMenu();
                 case "/exit" -> terminate();
-                default -> toWarningMenu("Please choose correct command");
+                default -> toWarningMenu(incorrectInputPrompt);
             }
         }
     }
