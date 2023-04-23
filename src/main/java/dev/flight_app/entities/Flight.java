@@ -96,7 +96,7 @@ public class Flight implements Serializable, Identifiable<Integer> {
 
     @Override
     public String toString() {
-        return String.format("| %-3d | %s | %s |\u001B[34m %-11s \u001B[0m---\u001B[33m %11s \u001B[0m| %s | %3d | %-16s",
+        return String.format("| %5d | %s | %s |\u001B[34m %-11s \u001B[0m---\u001B[33m %11s \u001B[0m| %s | %3d | %-16s",
                 flightID,
                 flightCode,
                 departureDateTime.format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")),

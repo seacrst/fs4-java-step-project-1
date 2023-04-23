@@ -21,7 +21,7 @@ public class FlightDB implements DB<Integer,Flight> {
 
     @Override
     public Map<Integer, Flight> read() {
-        if(!file.exists()) write(new FlightGenerator().flightsGen(500), file);
+        if(!file.exists()) write(new FlightGenerator().flightsGen(50000), file);
         return read(file);
     }
 }
