@@ -1,5 +1,6 @@
 package dev.flight_app.entities;
 
+import dev.flight_app.Validation;
 import dev.flight_app.services.DataCollector;
 
 import java.util.ArrayList;
@@ -9,13 +10,18 @@ import java.util.stream.Stream;
 public class Event<T extends DataCollector<T>> extends Console {
 
     T collector;
+    Validation validator;
 
-    public Event(T collector) {
+    public Event(T collector, Validation validator) {
         this.collector = collector;
+        this.validator = validator;
     }
 
     public static String readLine() {
         return Console.input();
+    }
+    public static int readNumber() {
+        return Integer.parseInt(Console.input());
     }
 
     public static String readLine(String msg) {
@@ -61,6 +67,10 @@ public class Event<T extends DataCollector<T>> extends Console {
     }
 
     public void handle(DataCollector<T> collector, String... steps) {
-        Stream.of(steps).forEach(step -> collector.collect(Event.readLine(step)));
+        Stream.of(steps).forEach(step -> {
+            String data = Event.readLine(step);
+                collector.collect(data);
+            }
+        );
     }
 }

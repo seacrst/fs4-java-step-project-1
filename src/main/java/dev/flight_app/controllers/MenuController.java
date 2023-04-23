@@ -2,12 +2,15 @@ package dev.flight_app.controllers;
 
 import java.util.*;
 
+import dev.flight_app.Validation;
 import dev.flight_app.entities.*;
 import dev.flight_app.services.*;
 
 public class MenuController {
     private String terminatingMsg;
     private final EventService events;
+    private final EventController services;
+    private final Validation validation = new Validation();
     private static final Map<String, String> actions = new HashMap<>();
 
     static {
@@ -25,6 +28,7 @@ public class MenuController {
 
     public MenuController(EventController eventController) {
         events = eventController.events();
+        services = eventController;
     }
 
     private static final String homePrompt = """
@@ -69,23 +73,28 @@ public class MenuController {
 
     public void toFlightSearchMenu() {
         Console.output(searchFlightByIdPrompt);
-        Optional<Flight> response = events.findFlightById(Event.readLine());
-        if (response.isPresent()) {
-            Console.output(response.get().toString());
-            Console.output(searchFlightByIdPrompt);
-            String s = Event.readLine();
-            switchTo(actions.get(s));
+
+        String id = Event.readLine();
+        if (!Validation.validateFlightId(id)) {
+            toFlightSearchMenu();
         } else {
-            toWarningMenu(getFlightFailure);
+            Optional<Flight> response = events.findFlightById(id);
+            if (response.isPresent()) {
+                Console.output(response.get());
+                String s = Event.readLine(getBackPrompt);
+                switchTo(actions.get(s));
+            } else {
+                toWarningMenu(getFlightFailure);
+            }
         }
-        Event.print(getBackPrompt);
     }
 
     public void toBookingMenu() {
+        Validation validator = new Validation();
         FlightDataCollector flightData = new FlightDataCollector();
-        Event<FlightDataCollector> event = new Event<>(flightData);
-        event.handle(flightData, createBookingArrivalPrompt, createBookingDatePrompt, createBookingPassengersPrompt);
+        Event<FlightDataCollector> event = new Event<>(flightData, validator);
 
+        event.handle(flightData, createBookingArrivalPrompt, createBookingDatePrompt, createBookingPassengersPrompt);
 //        ArrayList<String> bookingData = Event.collectData(Event::print, createBookingArrivalPromptEng, createBookingDatePromptEng, createBookingPassengersPromptEng);
         List<Flight> flightList = events.selectFlight(flightData);
         flightList.forEach(Console::output);
