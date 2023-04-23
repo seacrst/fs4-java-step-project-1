@@ -44,7 +44,6 @@ public class BookingService {
                         .anyMatch(e -> e.getFirstName().equalsIgnoreCase(name) &&
                                 e.getLastName().equalsIgnoreCase(surname)))
                 .collect(Collectors.toList());
-        result.stream().forEach(x -> System.out.println(x.toString()));
         return result;
     }
     public boolean cancelBooking(Integer id){

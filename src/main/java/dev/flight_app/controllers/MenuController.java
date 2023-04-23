@@ -10,8 +10,6 @@ import dev.flight_app.services.*;
 public class MenuController {
     private String terminatingMsg;
     private final EventService events;
-    private final EventController services;
-    private final Validation validation = new Validation();
     private static final Map<String, String> actions = new HashMap<>();
 
     static {
@@ -28,7 +26,6 @@ public class MenuController {
 
     public MenuController(EventController eventController) {
         events = eventController.events();
-        services = eventController;
     }
 
     private static final String homePrompt = """

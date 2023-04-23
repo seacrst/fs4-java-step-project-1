@@ -107,15 +107,14 @@ public class EventService {
 
     public String enterIndexOfFlight(String prompt, int size, Function<Void, Void> fallback) {
         String idx = Event.readLine(prompt);
-
-        if (idx.equals("0")) {
-            fallback.apply(null);
-        } else if (!Validation.isValidIndex(idx, size)) {
-            Console.output("Incorrect flight index");
-            enterIndexOfFlight(prompt, size, fallback);
+        if (Validation.isValidIndex(idx, size)) {
+            if (idx.equals("0")) {
+                fallback.apply(null);
+            }
+            return idx;
+        } else {
+            return enterIndexOfFlight("Incorrect flight index", size, fallback);
         }
-
-        return idx;
     }
 
     public boolean enterBookingId(String prompt) {

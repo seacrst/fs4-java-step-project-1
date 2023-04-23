@@ -76,7 +76,7 @@ public class Validation {
     }
 
     public static boolean isValidIndex(String s, int qt) {
-        if(Validation.validateFlightId(s)){
+        if(Validation.validateNumber(s)){
             return Integer.parseInt(s) <= qt;
         }
         return false;
