@@ -15,12 +15,11 @@ public class MenuController {
 
     static {
         actions.put("0", Menu.Selectors.Home.getState());
-        actions.put("1", Menu.Selectors.Register.getState());
-        actions.put("2", Menu.Selectors.AllFlights.getState());
-        actions.put("3", Menu.Selectors.MyFlights.getState());
-        actions.put("4", Menu.Selectors.CreateBooking.getState());
-        actions.put("5", Menu.Selectors.FindFlight.getState());
-        actions.put("6", Menu.Selectors.CancelBooking.getState());
+        actions.put("1", Menu.Selectors.AllFlights.getState());
+        actions.put("2", Menu.Selectors.MyFlights.getState());
+        actions.put("3", Menu.Selectors.CreateBooking.getState());
+        actions.put("4", Menu.Selectors.FindFlight.getState());
+        actions.put("5", Menu.Selectors.CancelBooking.getState());
         actions.put("!0",Menu.Selectors.Exit.getState());
     }
 
@@ -32,21 +31,21 @@ public class MenuController {
     }
 
     private static final String homePrompt = """
-    1. Register
-    2. Display all flights
-    3. My flights
-    4. Booking
-    5. Search flight
-    6. Cancel booking
+    1. Display all flights
+    2. My flights
+    3. Booking
+    4. Search flight
+    5. Cancel booking
     0. Exit
 """;
     private static final String createBookingArrivalPrompt = "Destination: ";
-    private static final String createBookingDatePrompt = "Date: ";
+    private static final String createBookingDatePrompt = "Date in dd-MM-yyyy format : ";
     private static final String createBookingPassengersPrompt = "Amount of passengers: ";
     private static final String readPassengerNamePrompt = "Name: ";
     private static final String readPassengerSurnamePrompt = "Surname: ";
     private static final String searchFlightByIdPrompt = "Enter flight ID: ";
     private static final String cancelBookingById = "Enter booking ID: ";
+    private static final String selectFlightByIndex = "Select flight by line number or 0 to exit: ";
     private static final String getBackPrompt = "0. Back: ";
     private static final String getFlightFailure = "Not found flight";
 
@@ -98,18 +97,27 @@ public class MenuController {
         events.enterDate(flightData, createBookingDatePrompt);
         events.enterSeats(flightData, createBookingPassengersPrompt);
 
-//        event.handle(flightData, createBookingArrivalPrompt, createBookingDatePrompt, createBookingPassengersPrompt);
-//        ArrayList<String> bookingData = Event.collectData(Event::print, createBookingArrivalPromptEng, createBookingDatePromptEng, createBookingPassengersPromptEng);
         List<Flight> flightList = events.selectFlight(flightData);
-        flightList.forEach(Console::output);
+        if (flightList.size() == 0) {
+            Console.output("Flight not found");
+            toHomeMenu();
+        } else {
+            flightList.forEach(flt -> {
+                int i = flightList.indexOf(flt) + 1;
+                System.out.println(i + ". " + flt.toString());
+            });
 
-//        events.enterFlightId(searchFlightByIdPrompt);
+
+            String idx = events.enterIndexOfFlight(selectFlightByIndex, flightList.size(), (x) -> {
+                toHomeMenu();
+                return null;
+            });
 
 
-//
-//        Optional<Flight> flt = events.findFlightById(Event.readLine(searchFlightByIdPrompt));
-//        flt.ifPresent(flight -> events.createBooking(Integer.parseInt(flightData.getSeatsAmount()), flight));
-//        switchTo("/index");
+            Booking booking = events.createBooking(Integer.parseInt(flightData.getSeatsAmount()), flightList.get(Integer.parseInt(idx) - 1));
+            Console.output(booking);
+            toHomeMenu();
+        }
     }
 
     public void toFlight() {
@@ -118,7 +126,15 @@ public class MenuController {
 
     public void toCancelBookingMenu() {
         Console.output(cancelBookingById);
-        events.cancelBooking(actions.get(Event.readLine()));
+        boolean result = events.enterBookingId(cancelBookingById);
+
+        if (result) {
+            Console.output("Deleted!");
+            toHomeMenu();
+        } else {
+            Console.output("Something went wrong...");
+
+        }
     }
 
     public void toPreviousMenu() {

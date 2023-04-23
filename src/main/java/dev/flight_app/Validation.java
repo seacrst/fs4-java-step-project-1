@@ -10,7 +10,7 @@ import java.time.format.DateTimeParseException;
 import java.util.stream.Stream;
 
 public class Validation {
-    public boolean isValidName(String s) {
+    public static boolean isValidName(String s) {
         if (s.length() < 2) return false;
         return s.chars().allMatch(Character::isLetter);
     }
@@ -46,7 +46,7 @@ public class Validation {
         return s;
     }
 
-    public boolean isValidId(String id) {
+    public static boolean isValidId(String id) {
         return id.chars().allMatch(Character::isDigit) && id.equals("0");
     }
 
@@ -106,6 +106,21 @@ public class Validation {
             System.out.println("Incorrect number of seats.");
             return false;
         }
+    }
+
+    public static boolean isValidIndexQt(String s, int qt) {
+        if(Validation.validateFlightId(s)){
+            return Integer.parseInt(s) <= qt;
+        }
+        return false;
+    }
+
+    public static boolean validateNumber(String s) {
+        try {
+            int id = Integer.parseInt(s);
+            return true;
+        } catch (IllegalArgumentException ex) {        System.out.println("IncorrectID format.");
+        return false;    }
     }
 
     public static LocalDate stringToDate(String s) {

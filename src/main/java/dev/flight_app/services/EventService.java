@@ -3,6 +3,7 @@ package dev.flight_app.services;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Optional;
+import java.util.function.Function;
 
 import dev.flight_app.Validation;
 import dev.flight_app.controllers.*;
@@ -26,20 +27,34 @@ public class EventService {
         return flight.selectByCityDateSeats(flightData.getDestination(), flightData.getDepartureDate(), flightData.getSeatsAmount());
     }
 
-    public void createBooking(int seats, Flight flt) {
+    public Booking createBooking(int seats, Flight flt) {
         List<Passenger> passengers = new ArrayList<>();
         ArrayList<String> names = new ArrayList<>();
 
         for (int i = 1; i <= seats; i ++) {
-            Passenger p = (Event.collectPassengersData(
-                    Event::print, String.format("Enter name of passenger: %s", i),
-                    String.format("Enter surname of passenger: %s", i)
-            ));
+            Passenger p = new Passenger(
+                    enterPassengerName(String.format("Enter name of passenger #%d: ", i)),
+                    enterPassengerName(String.format("Enter surname of passenger #%d: ", i))
+            );
+//            Passenger p = (Event.collectPassengersData(
+//                    enterPassengerName(String.format("Enter name of passenger: %s", i)),
+//                    Event::print, String.format("Enter name of passenger: %s", i),
+//                    enterPassengerName(String.format("Enter surname of passenger: %s", i))
+//            ));
 
             passengers.add(p);
         }
 
-        booking.createNewBooking(flt, passengers);
+        return booking.createNewBooking(flt, passengers);
+    }
+
+    public String enterPassengerName(String prompt) {
+        String name = Event.readLine(prompt);
+        if(!Validation.isValidName(name)) {
+            enterPassengerName(prompt);
+        }
+
+        return name;
     }
 
     public List<Booking> findBookingByPassengerData(ArrayList<String> passengerData) {
@@ -59,7 +74,7 @@ public class EventService {
     }
 
     public void cancelBooking(String id) {
-        booking.cancelBooking(Integer.parseInt(id));
+//        enterBookingId(id)
     }
 
 
@@ -90,13 +105,26 @@ public class EventService {
         }
     }
 
-    public void enterFlightId(String prompt) {
-        String id = Event.readLine(prompt);
+    public String enterIndexOfFlight(String prompt, int size, Function<Void, Void> fallback) {
+        String idx = Event.readLine(prompt);
 
-        if (!Validation.validateFlightId(id)) { // TODO && Validate list size
-            enterFlightId(prompt);
+        if (idx.equals("0")) {
+            fallback.apply(null);
+        } else if (!Validation.isValidIndexQt(idx, size)) {
+            Console.output("Incorrect flight index");
+                enterIndexOfFlight(prompt, size, fallback);
         }
 
+        return idx;
+    }
+
+    public boolean enterBookingId(String prompt) {
+        String id = Event.readLine(prompt);
+
+        if (!Validation.validateNumber(id)) {
+            return enterBookingId(id);
+        }
+        return booking.cancelBooking(Integer.parseInt(id));
     }
 
     public void saveData() {
