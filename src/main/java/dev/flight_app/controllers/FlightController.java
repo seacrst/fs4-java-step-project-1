@@ -65,7 +65,8 @@ public class FlightController {
     }
 
     public List<Flight> allFlights() {
-        return flightService.getAll();
+        return flightService.selectByDepartureCity(City.KYIV);
+//      return flightService.getAll();
     }
 
     public void loadData() {
