@@ -100,7 +100,8 @@ public class Validation {
     public static boolean validateSeatsQuantity(String s) {
         try {
             int seatsQuantity = Integer.parseInt(s);
-            return seatsQuantity >= 0 && seatsQuantity <= 400;
+            if (!(seatsQuantity > 0 && seatsQuantity <= 400)) throw new IllegalArgumentException();
+            return true;
         } catch (IllegalArgumentException ex) {
             System.out.println("Incorrect number of seats.");
             return false;
@@ -121,4 +122,7 @@ public class Validation {
     public static int stringToSeatsQuantity(String s) {
         return Integer.parseInt(s);
     }
+
+//    public static boolean
+
 }
