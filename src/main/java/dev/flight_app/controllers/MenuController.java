@@ -94,14 +94,22 @@ public class MenuController {
         FlightDataCollector flightData = new FlightDataCollector();
         Event<FlightDataCollector> event = new Event<>(flightData, validator);
 
-        event.handle(flightData, createBookingArrivalPrompt, createBookingDatePrompt, createBookingPassengersPrompt);
+        events.enterCity(flightData, createBookingArrivalPrompt);
+        events.enterDate(flightData, createBookingDatePrompt);
+        events.enterSeats(flightData, createBookingPassengersPrompt);
+
+//        event.handle(flightData, createBookingArrivalPrompt, createBookingDatePrompt, createBookingPassengersPrompt);
 //        ArrayList<String> bookingData = Event.collectData(Event::print, createBookingArrivalPromptEng, createBookingDatePromptEng, createBookingPassengersPromptEng);
         List<Flight> flightList = events.selectFlight(flightData);
         flightList.forEach(Console::output);
 
-        Optional<Flight> flt = events.findFlightById(Event.readLine(searchFlightByIdPrompt));
-        flt.ifPresent(flight -> events.createBooking(Integer.parseInt(flightData.getSeatsAmount()), flight));
-        switchTo("/index");
+//        events.enterFlightId(searchFlightByIdPrompt);
+
+
+//
+//        Optional<Flight> flt = events.findFlightById(Event.readLine(searchFlightByIdPrompt));
+//        flt.ifPresent(flight -> events.createBooking(Integer.parseInt(flightData.getSeatsAmount()), flight));
+//        switchTo("/index");
     }
 
     public void toFlight() {

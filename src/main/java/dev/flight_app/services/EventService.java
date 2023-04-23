@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Optional;
 
+import dev.flight_app.Validation;
 import dev.flight_app.controllers.*;
 import dev.flight_app.entities.*;
 
@@ -59,6 +60,43 @@ public class EventService {
 
     public void cancelBooking(String id) {
         booking.cancelBooking(Integer.parseInt(id));
+    }
+
+
+    public void enterCity(FlightDataCollector flightData, String prompt) {
+        String city = Event.readLine(prompt);
+        if (!Validation.validateCity(city)) {
+            enterCity(flightData, prompt);
+        } else {
+            flightData.setDestination(city);
+        }
+    }
+
+    public void enterDate(FlightDataCollector flightData, String prompt) {
+        String date = Event.readLine(prompt);
+        if (!Validation.validateDate(date)) {
+            enterDate(flightData, prompt);
+        } else {
+            flightData.setDepartureDate(date);
+        }
+    }
+
+    public void enterSeats(FlightDataCollector flightData, String prompt) {
+        String seats = Event.readLine(prompt);
+        if (!Validation.validateSeatsQuantity(seats)) {
+            enterSeats(flightData, prompt);
+        } else {
+            flightData.setSeatsAmount(seats);
+        }
+    }
+
+    public void enterFlightId(String prompt) {
+        String id = Event.readLine(prompt);
+
+        if (!Validation.validateFlightId(id)) { // TODO && Validate list size
+            enterFlightId(prompt);
+        }
+
     }
 
     public void saveData() {

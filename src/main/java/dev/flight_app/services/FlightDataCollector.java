@@ -24,15 +24,15 @@ public class FlightDataCollector implements DataCollector<FlightDataCollector> {
         return seatsAmount;
     }
 
-    private void setDestination(String d) {
+    public void setDestination(String d) {
         destination = d;
     }
 
-    private void setDepartureDate(String dd) {
+    public void setDepartureDate(String dd) {
         departureDate = dd;
     }
 
-    private void setSeatsAmount(String sts) {
+    public void setSeatsAmount(String sts) {
         seatsAmount = sts;
     }
 

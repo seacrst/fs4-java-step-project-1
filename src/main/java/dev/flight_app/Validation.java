@@ -57,7 +57,7 @@ public class Validation {
         return false;
     }
 
-    public boolean validateDate(String s) {
+    public static boolean validateDate(String s) {
         try {
             LocalDate date = LocalDate.parse(s, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
             return true;
