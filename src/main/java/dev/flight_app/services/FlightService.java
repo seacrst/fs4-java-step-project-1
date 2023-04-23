@@ -40,12 +40,6 @@ public class FlightService {
                 .collect(Collectors.toList());
     }
 
-    public List<Flight> selectByDepartureCity(List<Flight> flights, City departureCity) {
-        return flights.stream()
-                .filter(x -> x.getDepartureCity().equals(departureCity))
-                .collect(Collectors.toList());
-    }
-
     public List<Flight> selectByArrivalCity(City arrivalCity) {
         return getAll().stream()
                 .filter(x -> x.getArrivalCity().equals(arrivalCity))
@@ -70,18 +64,6 @@ public class FlightService {
                 .collect(Collectors.toList());
     }
 
-    public List<Flight> selectByArrivalDate(LocalDate arrivalDate) {
-        return getAll().stream()
-                .filter(x -> x.getArrivalDateTime().toLocalDate().equals(arrivalDate))
-                .collect(Collectors.toList());
-    }
-
-    public List<Flight> selectByArrivalDate(List<Flight> flights, LocalDate arrivalDate) {
-        return flights.stream()
-                .filter(x -> x.getArrivalDateTime().toLocalDate().equals(arrivalDate))
-                .collect(Collectors.toList());
-    }
-
     public List<Flight> selectBySeatsQuantity(int seatsQuantity) {
         return getAll().stream()
                 .filter(x -> x.getSeatsQuantity() >= seatsQuantity)
@@ -94,21 +76,11 @@ public class FlightService {
                 .collect(Collectors.toList());
     }
 
-    public List<Flight> selectByDepartureDateTime(List<Flight> flights, LocalDateTime localDateTime){
-        return  flights.stream()
-                .filter(x-> x.getDepartureDateTime().isBefore(localDateTime))
+    public List<Flight> selectByDepartureDateTime(List<Flight> flights, LocalDateTime localDateTime) {
+        return flights.stream()
+                .filter(x -> x.getDepartureDateTime().isBefore(localDateTime))
                 .collect(Collectors.toList());
     }
-
-    public void addPassenger(Flight flight, int bookingSeats) {
-        flightDao.getById(flight.id()).ifPresent(value -> value.addPassenger(bookingSeats));
-    }
-
-    public void removePassenger(Flight flight, int bookingSeats) {
-        flightDao.getById(flight.id()).ifPresent(value -> value.removePassenger(bookingSeats));
-    }
-
-
 
     public void loadData() {
         flightDao.load();

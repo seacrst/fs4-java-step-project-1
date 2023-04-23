@@ -21,21 +21,6 @@ public enum Airline {
     CONDOR("CN"),
     AIR_EUROPA("EU"),
     UKRAINE_INTERNATIONAL_AIRLINES("UA"),
-//    VIRGIN_ATLANTIC("VA"),
-//    AIR_ASTANA("AS"),
-//    AIRBALTIC("AB"),
-//    ICELANDAIR_GROUP("IC"),
-//    AZERBAIJAN_AIRLINES("AZ"),
-//    TAROM("TR"),
-//    VOLOTEA("VL"),
-//    AIR_SERBIA("SB"),
-//    ENTER_AIR("EN"),
-//    SKY_EXPRESS("SE"),
-//    LUXAIR("LX"),
-//    SKYUP("KY"),
-//    CROATIA_AIRLINES("CR"),
-//    WINDROSE("WR"),
-//    BULGARIA_AIR("BA"),
     AIR_MALTA("AM");
     private final String code;
 
