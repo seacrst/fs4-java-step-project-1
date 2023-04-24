@@ -8,8 +8,11 @@ import java.util.Map;
 import java.util.Optional;
 
 public class BookingDao implements DAO<Integer, Booking>{
-    private final Map<Integer, Booking> bookings = new HashMap<>();
+    private Map<Integer, Booking> bookings = new HashMap<>();
     private final BookingDB BDB = BookingDB.getBDB();
+    public BookingDao(){
+        this.bookings = BDB.read();
+    }
     @Override
     public Map<Integer, Booking> getAll() {
         return bookings;
@@ -27,11 +30,6 @@ public class BookingDao implements DAO<Integer, Booking>{
 
     public void add(Booking booking) {
         bookings.put(booking.id(), booking);
-    }
-
-    @Override
-    public void load() {
-        bookings.putAll(BDB.read());
     }
 
     @Override

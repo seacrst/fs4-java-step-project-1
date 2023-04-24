@@ -15,8 +15,7 @@ import static dev.flight_app.entities.Airline.RYANAIR;
 import static dev.flight_app.entities.City.BERN;
 import static dev.flight_app.entities.City.BRATISLAVA;
 import static org.junit.Assert.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 

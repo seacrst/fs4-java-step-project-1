@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 public class FlightService {
 
-    public final FlightDao flightDao = new FlightDao();
+    private final FlightDao flightDao = new FlightDao();
 
     public FlightService() {
     }
@@ -80,10 +80,6 @@ public class FlightService {
         return flights.stream()
                 .filter(x -> x.getDepartureDateTime().isBefore(localDateTime))
                 .collect(Collectors.toList());
-    }
-
-    public void loadData() {
-        flightDao.load();
     }
 
     public boolean saveData() {

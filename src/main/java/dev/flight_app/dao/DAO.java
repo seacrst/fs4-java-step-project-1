@@ -13,8 +13,5 @@ public interface DAO<ID, E extends Identifiable<ID>> {
     default boolean delete(E o) {
         return delete(o.id());
     }
-
-    void load();
-
     boolean save();
 }

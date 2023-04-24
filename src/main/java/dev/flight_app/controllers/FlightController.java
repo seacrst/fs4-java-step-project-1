@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class FlightController {
-    private final FlightService flightService = new FlightService();
+    public final FlightService flightService = new FlightService();
 
     public FlightController() {
     }
@@ -35,11 +35,6 @@ public class FlightController {
         List<Flight> byCityDeparture = flightService.selectByDepartureCity(City.KYIV);
         return flightService.selectByDepartureDateTime(byCityDeparture, LocalDateTime.now().plusHours(24));
     }
-
-    public void loadData() {
-        flightService.loadData();
-    }
-
     public void saveData() {
         flightService.saveData();
     }

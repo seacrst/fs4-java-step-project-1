@@ -55,9 +55,6 @@ public class BookingService {
          return true;
         }
     }
-    public void loadData(){
-        bookingDao.load();
-    }
     public boolean saveData() {
         return bookingDao.save();
     }

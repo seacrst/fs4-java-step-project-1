@@ -7,13 +7,5 @@ public class EventController {
     private final EventService eventService = new EventService(flightController, bookingController);
     public EventController() { }
 
-    public BookingController bookings() {
-        return bookingController;
-    }
-
-    public FlightController flights() {
-        return flightController;
-    }
-
     public EventService events() { return eventService; }
 }

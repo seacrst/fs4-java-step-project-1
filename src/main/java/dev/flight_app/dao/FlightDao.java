@@ -9,8 +9,11 @@ import java.util.Optional;
 
 public class FlightDao implements DAO<Integer, Flight> {
 
-    private final Map<Integer, Flight> flights = new HashMap<>();
+    private Map<Integer, Flight> flights = new HashMap<>();
     private final FlightDB FDB = FlightDB.getFDB();
+    public FlightDao(){
+        this.flights = FDB.read();
+    }
 
     @Override
     public Map<Integer, Flight> getAll() {
@@ -27,12 +30,6 @@ public class FlightDao implements DAO<Integer, Flight> {
         return Optional.ofNullable(flights.remove(id))
                 .isPresent();
     }
-
-    @Override
-    public void load() {
-        flights.putAll(FDB.read());
-    }
-
     @Override
     public boolean save() {
         return FDB.write(flights);
