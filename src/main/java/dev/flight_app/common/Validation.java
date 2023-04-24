@@ -1,7 +1,6 @@
 package dev.flight_app.common;
 
 import dev.flight_app.entities.City;
-import dev.flight_app.entities.Console;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -43,22 +42,13 @@ public class Validation {
                 .forEach(sb::append);
         return sb.toString();
     }
-
-    public static boolean validateFlightId(String s) {
+    public static boolean validateId(String s) {
         try {
             int id = Integer.parseInt(s);
+            if (id < 0) throw new NumberFormatException();
             return true;
         } catch (IllegalArgumentException ex) {
-            System.out.println("Incorrect Flight ID format or this ID could not be found in the database.");
-            return false;
-        }
-    }
-    public static boolean validateNumber(String s) {
-        try {
-            int id = Integer.parseInt(s);
-            return true;
-        } catch (NumberFormatException ex) {
-            Console.output("Incorrect ID format.");
+            System.out.println("Incorrect ID format.");
             return false;
         } catch (NullPointerException ex) {
             return false;
@@ -76,8 +66,8 @@ public class Validation {
     }
 
     public static boolean isValidIndex(String s, int qt) {
-        if(Validation.validateNumber(s)){
-            return Integer.parseInt(s) <= qt;
+        if(Validation.validateId(s)){
+            return Integer.parseInt(s)<= qt;
         }
         return false;
     }

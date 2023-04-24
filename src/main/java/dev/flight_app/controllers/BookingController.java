@@ -21,9 +21,6 @@
         public boolean cancelBooking(int id) {
             return bookingService.cancelBooking(id);
         }
-        public void loadData() {
-            bookingService.loadData();
-        }
         public boolean saveData() {
             return bookingService.saveData();
         }

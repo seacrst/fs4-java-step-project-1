@@ -7,7 +7,6 @@ public class Menu {
 
     public enum Selectors {
         Home("/index", "0"),
-        Register("/register", "1"),
         AllFlights("/all-flights", "2"),
         MyFlights("/my-flights", "3"),
         CreateBooking("/new-booking", "4"),

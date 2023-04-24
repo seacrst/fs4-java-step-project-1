@@ -30,14 +30,16 @@ public class MenuController {
     }
 
     private static final String homePrompt = """
-________________________
-1. Display all flights
+----------------------------
+         Main Menu
+----------------------------
+1. Flight board
 2. My flights
-3. Booking
-4. Search flight
+3. Flight search and booking
+4. View flight
 5. Cancel booking
 0. Exit
-________________________
+----------------------------
 """;
     private static final String enterMenuNumber = "Enter menu number: ";
     private static final String createBookingArrivalPrompt = "Destination: ";
@@ -49,7 +51,7 @@ ________________________
     private static final String cancelBookingById = "Enter booking ID: ";
     private static final String selectFlightByIndex = "Select flight by line number or 0 to exit: ";
     private static final String getBackPrompt = "0. Back: ";
-    private static final String getFlightFailure = "Not found flight";
+    private static final String getFlightFailure = "Flight not found!";
     private static final String incorrectInputPrompt = "Incorrect input. Please try again";
 
 
@@ -99,16 +101,16 @@ ________________________
 
     public void toFlightSearchMenu() {
         String id = Event.readLine(searchFlightByIdPrompt);
-        if (!Validation.validateFlightId(id)) {
+        if (!Validation.validateId(id)) {
             toFlightSearchMenu();
         } else {
             Optional<Flight> response = events.findFlightById(id);
             if (response.isPresent()) {
                 Console.output(response.get());
-                toHomeMenu();
             } else {
-                toWarningMenu(getFlightFailure);
+                Console.output(getFlightFailure);
             }
+            toHomeMenu();
         }
     }
 
@@ -147,10 +149,6 @@ ________________________
         }
     }
 
-    public void toFlight() {
-
-    }
-
     public void toCancelBookingMenu() {
         boolean result = events.enterBookingId(cancelBookingById);
 
@@ -174,7 +172,6 @@ ________________________
                 case "/my-flights" -> toMyFlightsMenu();
                 case "/new-booking" -> toBookingMenu();
                 case "/find-flight" -> toFlightSearchMenu();
-                case "/get-flight" -> toFlight();
                 case "/cancel-flight" -> toCancelBookingMenu();
                 case "/exit" -> terminate();
                 default -> toWarningMenu(incorrectInputPrompt);

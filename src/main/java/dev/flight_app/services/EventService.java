@@ -27,19 +27,12 @@ public class EventService {
 
     public Booking createBooking(int seats, Flight flt) {
         List<Passenger> passengers = new ArrayList<>();
-        ArrayList<String> names = new ArrayList<>();
 
         for (int i = 1; i <= seats; i ++) {
             Passenger p = new Passenger(
                     enterPassengerName(String.format("Enter name of passenger #%d: ", i)),
                     enterPassengerName(String.format("Enter surname of passenger #%d: ", i))
             );
-//            Passenger p = (Event.collectPassengersData(
-//                    enterPassengerName(String.format("Enter name of passenger: %s", i)),
-//                    Event::print, String.format("Enter name of passenger: %s", i),
-//                    enterPassengerName(String.format("Enter surname of passenger: %s", i))
-//            ));
-
             passengers.add(p);
         }
 
@@ -48,13 +41,12 @@ public class EventService {
 
     public String enterPassengerName(String prompt) {
         String name = Event.readLine(prompt);
-//        if(!Validation.isValidName(name)) {
-//            enterPassengerName(prompt);
-//        }
-        while(!Validation.isValidName(name)){
-            enterPassengerName(prompt);
+        if(Validation.isValidName(name)){
+            return name;
+        } else{
+            return enterPassengerName("Incorrect name format. Try again: ");
         }
-        return name;
+
     }
 
     public List<Booking> findBookingByPassengerData(ArrayList<String> passengerData) {
@@ -113,13 +105,13 @@ public class EventService {
             }
             return idx;
         } else {
-            return enterIndexOfFlight("Incorrect flight index", size, fallback);
+            return enterIndexOfFlight("Try again or 0 to exit: ", size, fallback);
         }
     }
 
     public boolean enterBookingId(String prompt) {
         String id = Event.readLine(prompt);
-        if (!Validation.validateNumber(id)) {
+        if (!Validation.validateId(id)) {
             enterBookingId(prompt);
             return false;
         } else {
